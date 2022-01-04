@@ -4,7 +4,132 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" type="text/css" href="./src/stylesheets/reset.css" />
+    <link rel="stylesheet" type="text/css" href="./src/stylesheets/style.css" />
+    <link rel="stylesheet" type="text/css" href="./src/stylesheets/icons.css" />
     <title>Inspiro</title>
   </head>
-  <body></body>
+  <body>
+    <header class="head">
+      <div class="head__content">
+        <div class="content__item content__item--search-bar">
+          <input class="item__input item__input--field" type="text" />
+        </div>
+
+        <div class="content__item content__item--menu">
+          <i class="item__icon gg-menu"></i>
+        </div>
+      </div>
+    </header>
+
+    <nav class="nav--menu hidden">
+      <ul class="nav__tabs">
+        <li class="tabs__item">
+          <a class="item__link item__link--quotes">Quotes</a>
+        </li>
+        <li class="tabs__item">
+          <a class="item__link item__link--people">People</a>
+        </li>
+        <li class="tabs__item">
+          <a class="item__link item__link--goals">Long-term Goals</a>
+        </li>
+      </ul>
+    </nav>
+
+    <main class="main">
+      <div class="main__content content">
+        <div class="content__aside aside">
+          <h2 class="aside__header">Weekly Goals</h2>
+          <ul class="aside__list list">
+            <li class="list__item item">
+              <label class="item__label">Finish deadline project</label>
+              <input class="item__input" type="checkbox" />
+            </li>
+
+            <li class="list__item">
+              <label class="item__label">Finish deadline project</label>
+              <input class="item__input" type="checkbox" />
+            </li>
+
+            <li class="list__item">
+              <label class="item__label">Finish deadline project</label>
+              <input class="item__input" type="checkbox" />
+            </li>
+          </ul>
+        </div>
+
+        <div class="content__wrapper wrapper">
+          <h2 class="wrapper__header">Jan 2022</h2>
+
+          <table class="wrapper__table table">
+            <thead class="table__head">
+              <tr class="head__row">
+                <th class="row__head" scope="col">Sun</th>
+                <th class="row__head" scope="col">Mon</th>
+                <th class="row__head" scope="col">Tue</th>
+                <th class="row__head" scope="col">Wed</th>
+                <th class="row__head" scope="col">Thu</th>
+                <th class="row__head" scope="col">Fri</th>
+                <th class="row__head" scope="col">Sat</th>
+              </tr>
+            </thead>
+
+            <tbody class="table__body body">
+              <tr class="body__row">
+                <td class="row__data data--hover--yellow"></td>
+                <td class="row__data"></td>
+                <td class="row__data"></td>
+                <td class="row__data"></td>
+                <td class="row__data"></td>
+                <td class="row__data"></td>
+                <td class="row__data"></td>
+              </tr>
+
+              <tr class="body__row">
+                <td class="row__data"></td>
+                <td class="row__data"></td>
+                <td class="row__data"></td>
+                <td class="row__data"></td>
+                <td class="row__data"></td>
+                <td class="row__data"></td>
+                <td class="row__data"></td>
+              </tr>
+
+              <tr class="body__row">
+                <td class="row__data"></td>
+                <td class="row__data"></td>
+                <td class="row__data"></td>
+                <td class="row__data"></td>
+                <td class="row__data"></td>
+                <td class="row__data"></td>
+                <td class="row__data"></td>
+              </tr>
+
+              <tr class="body__row">
+                <td class="row__data"></td>
+                <td class="row__data"></td>
+                <td class="row__data"></td>
+                <td class="row__data"></td>
+                <td class="row__data"></td>
+                <td class="row__data"></td>
+                <td class="row__data"></td>
+              </tr>
+            </tbody>
+          </table>
+
+          <nav class="wrapper__nav nav">
+            <button class="nav__btn nav__btn--prev btn">Previous</button>
+            <button class="nav__btn nav__btn--next btn">Next</button>
+          </nav>
+        </div>
+
+        <div class="container--quote">
+          <p class="container__label container__label--quote">
+            He who says he can and he who says he can't are both usually right
+          </p>
+          <p class="container__label container__label--author">Confecius</p>
+        </div>
+      </div>
+    </main>
+  </body>
 </html>

@@ -29,3 +29,279 @@ iframe {
    max-width: 100%;
    height: auto;
 }
+
+/*
+================================
+ Content
+ 
+================================
+*/
+
+/* General Elements */
+.btn {
+  cursor: pointer;
+}
+
+/* Class Modifiers */
+
+.hidden {
+  visibility: hidden;
+  opacity: 0;
+}
+
+/* 
+ *
+ * Head
+ *
+ *
+ */
+
+.head {
+  position: relative;
+  top: 0;
+  left: 0;
+  z-index: 10;
+  width: 100%;
+  background-color: lavenderblush;
+}
+.head__content {
+  display: flex;
+  align-items: center;
+  max-width: 40rem;
+  height: 5rem;
+  padding: 1rem;
+  margin: 0 auto;
+  background-color: aliceblue;
+  overflow: hidden;
+}
+
+/* 
+ *
+ * Head
+ *
+ * * * Content
+ * 
+ *
+ */
+
+.head .content__item--search-bar {
+  flex-grow: 5;
+}
+.head .content__item--menu {
+  position: relative;
+  flex-grow: 1;
+  width: 2rem;
+  height: 2rem;
+  margin: 0 1rem;
+  cursor: pointer;
+}
+/* Search bar */
+.head__content .item__input--field {
+  display: block;
+  width: 90%;
+  margin: 0 auto;
+  border: 1px solid black;
+  border-radius: 12px;
+}
+/* Hamburger icon */
+.head__content .item__icon {
+  position: absolute;
+  top: 45%;
+  left: 20%;
+}
+
+/* 
+ *
+ * Nav Menu
+ *
+ *
+ */
+
+.nav--menu {
+  position: absolute;
+  top: 5rem;
+  right: 0;
+  z-index: 100;
+  width: 10rem;
+  height: 16rem;
+}
+.nav__tabs {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+  padding: 0 0.5rem;
+  background-color: grey;
+}
+/* Tab item */
+.nav .tabs__item {
+  width: 100%;
+  padding: 0.5rem;
+  margin: 0.5rem 1rem;
+}
+.nav__tabs .item__link {
+  font-size: 1.3rem;
+  font-weight: 500;
+  cursor: pointer;
+}
+
+/* 
+ *
+ * Main
+ *
+ *
+ */
+
+.main {
+  width: 100%;
+  height: 100%;
+}
+.main__content {
+  position: relative;
+  padding: 0.5rem;
+}
+
+/* 
+ *
+ * Main
+ *
+ * * * Aside
+ *
+ *
+ */
+
+.main .content__aside {
+  display: block;
+  width: 80%;
+  max-width: 30rem;
+  padding: 0.5rem;
+  margin: 1rem auto;
+  text-align: center;
+  border: 2px solid black;
+  border-radius: 12px;
+}
+/* Header */
+.main__content .aside__header {
+  font-size: 2rem;
+  font-weight: 400;
+  text-decoration: underline;
+}
+/* List */
+.main__content .aside__list {
+  width: 60%;
+  margin: 1rem auto;
+}
+/* List item */
+.main__content .aside .list__item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin: 1rem 0;
+}
+.main__content .aside .item__label {
+  font-size: 1rem;
+}
+.main__content .aside .item__input {
+  width: 1.5rem;
+  height: 1.5rem;
+  cursor: pointer;
+}
+
+/* 
+ *
+ * Main
+ *
+ * * * Wrapper
+ *
+ *
+ */
+
+.main .content__wrapper {
+  display: block;
+  width: 90%;
+  margin: 1rem auto;
+  border: 4px solid #dddddd;
+  border-top-width: 2rem;
+  border-bottom-width: 2.5rem;
+  border-radius: 8px;
+  overflow: hidden;
+}
+/* Month-Year header */
+.main__content .wrapper__header {
+  padding: 0 1rem;
+  color: lightblue;
+  font-size: 2rem;
+  font-weight: 400;
+  text-transform: uppercase;
+  background: #fff;
+  border-bottom: 1px solid #ececec;
+}
+/* Calendar */
+.main__content .wrapper__table {
+  table-layout: fixed;
+  width: 100%;
+  background-color: cornsilk;
+  border-collapse: collapse;
+}
+/* Pagination nav */
+.main__content .wrapper__nav {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* 
+ *
+ * Main
+ *
+ * * * Wrapper
+ *
+ * * * * * Table + Nav
+ *
+ *
+ */
+
+/* Table head */
+.main__content .wrapper .head__row {
+  background: #fff;
+}
+.main__content .wrapper .row__head {
+  padding: 0.5rem;
+  font-size: 1rem;
+  font-weight: 600;
+  color: lightgreen;
+  border: 1px solid whitesmoke;
+}
+/* Table body */
+.main__content .wrapper .body__row {
+  background: white;
+}
+.main__content .wrapper .row__data {
+  padding: 1.5rem;
+  text-align: center;
+  border: 2px solid whitesmoke;
+}
+/* Nav buttons */
+.main__content .wrapper .nav__btn {
+  width: 40%;
+  margin: 0 1rem;
+  border: 1.5px solid black;
+  border-radius: 12px;
+  background-color: aliceblue;
+}
+
+/* 
+ *
+ * Container Quote
+ *
+ *
+ */
+
+.container--quote {
+  display: block;
+  width: 50%;
+  padding: 1rem;
+  margin: 3rem auto;
+  border: 1px solid black;
+}
