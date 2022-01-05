@@ -1,7 +1,6 @@
 :root {
   --ggs: 1;
 }
-
 /* Hamburger menu */
 .gg-menu {
   transform: scale(var(--ggs, 1));
@@ -25,4 +24,30 @@
 }
 .gg-menu::after {
   top: 6px;
+}
+/* Search maginifier */
+.gg-search {
+  box-sizing: border-box;
+  position: relative;
+  display: block;
+  transform: scale(var(--ggs, 1));
+  width: 16px;
+  height: 16px;
+  border: 2px solid;
+  border-radius: 100%;
+  margin-left: -4px;
+  margin-top: -4px;
+}
+.gg-search::after {
+  content: "";
+  display: block;
+  box-sizing: border-box;
+  position: absolute;
+  border-radius: 3px;
+  width: 2px;
+  height: 8px;
+  background: currentColor;
+  transform: rotate(-45deg);
+  top: 10px;
+  left: 12px;
 }

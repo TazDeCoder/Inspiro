@@ -10,34 +10,49 @@
     <title>Inspiro</title>
   </head>
   <body>
+    <!-- Fixed at top -->
     <header class="head">
       <div class="head__content">
-        <div class="content__item content__item--search-bar">
-          <input class="item__input item__input--field" type="text" />
-        </div>
-
+        <!-- Searchbar  -->
+        <form class="content__form content__form--search">
+          <i class="form__icon--search gg-search"></i>
+          <input class="form__input--field" type="text" />
+        </form>
+        <!-- Hamburger menu -->
         <div class="content__item content__item--menu">
-          <i class="item__icon gg-menu"></i>
+          <i class="item__icon--menu gg-menu"></i>
         </div>
+        <!-- Toggle menu -->
+        <nav class="content__nav--menu">
+          <!-- Links to different views -->
+          <ul class="nav__tabs">
+            <li class="tabs__item">
+              <a class="item__link item__link--home" href="/">Home</a>
+            </li>
+
+            <li class="tabs__item">
+              <a class="item__link item__link--quotes" href="/quotes">Quotes</a>
+            </li>
+
+            <li class="tabs__item">
+              <a class="item__link item__link--models" href="/models"
+                >Role Models</a
+              >
+            </li>
+
+            <li class="tabs__item">
+              <a class="item__link item__link--aspirations" href="/aspirations"
+                >Aspirations</a
+              >
+            </li>
+          </ul>
+        </nav>
       </div>
     </header>
 
-    <nav class="nav--menu hidden">
-      <ul class="nav__tabs">
-        <li class="tabs__item">
-          <a class="item__link item__link--quotes">Quotes</a>
-        </li>
-        <li class="tabs__item">
-          <a class="item__link item__link--people">People</a>
-        </li>
-        <li class="tabs__item">
-          <a class="item__link item__link--goals">Long-term Goals</a>
-        </li>
-      </ul>
-    </nav>
-
     <main class="main">
-      <div class="main__content content">
+      <!-- Page that display the different views -->
+      <div class="main__content content--flex">
         <div class="content__aside aside">
           <h2 class="aside__header">Weekly Goals</h2>
           <ul class="aside__list list">
@@ -123,11 +138,13 @@
           </nav>
         </div>
 
-        <div class="container--quote">
-          <p class="container__label container__label--quote">
-            He who says he can and he who says he can't are both usually right
+        <div class="content__box--quote">
+          <p class="box__label box__label--quote">
+            It is not the strongest of the species that survives, nor the most
+            intelligent that survives. It is the one that is the most adaptable
+            to change
           </p>
-          <p class="container__label container__label--author">Confecius</p>
+          <p class="box__label box__label--author">Charles Darwin</p>
         </div>
       </div>
     </main>
