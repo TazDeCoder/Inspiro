@@ -29,6 +29,18 @@ iframe {
    max-width: 100%;
    height: auto;
 }
+:root {
+  /* Primary Colors */
+  --color-primary: #4b4b4b;
+  --color-primary-lighter: #aeadad;
+  /* Secondary Colors */
+  --color-secondary: #464646;
+  --color-secondary-darker: #2d2d2d;
+  --color-secondary-lighter: #a2a3a1;
+  /* Tertiary Colors */
+  --color-tertiary: #3c3c3c;
+  --color-tertiary-lighter: #8a8b8a;
+}
 
 /*
 ================================
@@ -62,7 +74,7 @@ iframe {
   left: 0;
   z-index: 10;
   width: 100%;
-  height: 3rem;
+  background-color: var(--color-tertiary);
 }
 .head__content {
   display: flex;
@@ -70,7 +82,6 @@ iframe {
   height: 5rem;
   padding: 1rem;
   margin: 0 auto;
-  background-color: aliceblue;
   overflow: hidden;
 }
 
@@ -97,7 +108,7 @@ iframe {
   width: 90%;
   padding: 0.25rem 0.5rem;
   margin: 0 auto;
-  border: 2px solid black;
+  border: 2px solid white;
   border-radius: 12px;
   background-color: white;
 }
@@ -127,6 +138,7 @@ iframe {
   position: absolute;
   top: 45%;
   left: 20%;
+  color: var(--color-tertiary-lighter);
 }
 
 @media only screen and (min-width: 768px) {
@@ -160,34 +172,40 @@ iframe {
   align-items: center;
   width: 100%;
   height: 100%;
-  padding: 0 0.5rem;
-  background-color: grey;
+  background-color: var(--color-secondary-darker);
 }
 /* Tab item */
 .head__content .tabs__item {
-  width: 90%;
-  padding: 0.5rem;
-  margin: 0.5rem 1rem;
+  width: 100%;
+  padding: 1rem;
   text-align: center;
+}
+.head__content .tabs__item:nth-child(n + 2) {
+  border-top: 2px solid var(--color-secondary-lighter);
 }
 .head__content .item__link {
   font-size: 1.3rem;
   font-weight: 500;
   cursor: pointer;
+  color: white;
+  text-decoration: none;
 }
 
 @media only screen and (min-width: 768px) {
   .head .content__nav--menu {
     position: initial;
+    visibility: initial;
+    opacity: 1;
   }
   .head__content .nav__tabs {
     flex-direction: row;
     flex-wrap: nowrap;
-    background-color: whitesmoke;
+    background-color: inherit;
   }
-  .head__content .tabs__item {
+  .head__content .tabs__item:nth-child(n) {
     width: 100%;
     margin: 0.5rem 0;
+    border: none;
   }
 }
 
@@ -201,6 +219,7 @@ iframe {
 .main {
   width: 100%;
   min-height: 100%;
+  background-color: var(--color-primary);
 }
 .main__content {
   position: relative;
@@ -235,7 +254,9 @@ iframe {
   padding: 0.5rem;
   margin: 1rem auto;
   text-align: center;
-  border: 2px solid black;
+  color: white;
+  background-color: var(--color-secondary);
+  border: 2px solid var(--color-secondary-darker);
   border-radius: 12px;
 }
 /* Header */
@@ -285,27 +306,28 @@ iframe {
   display: block;
   width: 90%;
   margin: 1rem auto;
-  border: 4px solid #dddddd;
+  border: 4px solid var(--color-secondary-darker);
   border-top-width: 2rem;
   border-bottom-width: 2.5rem;
+  border-left-width: 0.5rem;
+  border-right-width: 0.5rem;
   border-radius: 8px;
   overflow: hidden;
 }
 /* Month-Year header */
 .main__content .wrapper__header {
   padding: 0 1rem;
-  color: lightblue;
+  color: black;
   font-size: 2rem;
   font-weight: 400;
   text-transform: uppercase;
-  background: #fff;
-  border-bottom: 1px solid #ececec;
+  background-color: var(--color-tertiary-lighter);
+  border-bottom: 1px solid var(--color-secondary-darker);
 }
 /* Calendar */
 .main__content .wrapper__table {
   table-layout: fixed;
   width: 100%;
-  background-color: cornsilk;
   border-collapse: collapse;
 }
 /* Pagination nav */
@@ -336,31 +358,34 @@ iframe {
 
 /* Table head */
 .main__content .wrapper .head__row {
-  background: #fff;
+  background-color: white;
+  border-top: 1px solid var(--color-tertiary);
 }
 .main__content .wrapper .row__head {
   padding: 0.5rem;
   font-size: 1rem;
   font-weight: 600;
-  color: lightgreen;
-  border: 1px solid whitesmoke;
+  color: black;
 }
 /* Table body */
 .main__content .wrapper .body__row {
-  background: white;
+  background: var(--color-secondary);
 }
 .main__content .wrapper .row__data {
   padding: 1.5rem;
   text-align: center;
-  border: 2px solid whitesmoke;
+  border: 2px solid var(--color-tertiary-lighter);
 }
 /* Nav buttons */
 .main__content .wrapper .nav__btn {
   width: 40%;
-  margin: 0 1rem;
-  border: 1.5px solid black;
+  margin: 0.5rem 1rem;
+  border: 2px solid var(--color-tertiary);
   border-radius: 12px;
-  background-color: aliceblue;
+  background-color: white;
+}
+.main__content .wrapper .nav__btn:hover {
+  background-color: #cccccc;
 }
 
 /* 
@@ -377,9 +402,12 @@ iframe {
   width: 50%;
   padding: 1rem;
   margin: 3rem auto;
-  border: 1px solid black;
+  background-color: var(--color-secondary);
+  border: 1px solid var(--color-secondary-darker);
+  color: white;
 }
 .main .content__box--quote .box__label--author {
+  font-weight: 600;
   text-align: right;
 }
 
