@@ -51,3 +51,61 @@
   top: 10px;
   left: 12px;
 }
+/* Circle-add */
+.gg-add {
+  box-sizing: border-box;
+  position: relative;
+  display: block;
+  width: 22px;
+  height: 22px;
+  border: 2px solid;
+  transform: scale(var(--ggs, 1));
+  border-radius: 22px;
+}
+.gg-add::after,
+.gg-add::before {
+  content: "";
+  display: block;
+  box-sizing: border-box;
+  position: absolute;
+  width: 10px;
+  height: 2px;
+  background: currentColor;
+  border-radius: 5px;
+  top: 8px;
+  left: 4px;
+}
+.gg-add::after {
+  width: 2px;
+  height: 10px;
+  top: 4px;
+  left: 8px;
+}
+/* Bookmark */
+.gg-bookmark,
+.gg-bookmark::after {
+  display: block;
+  box-sizing: border-box;
+  border-top-right-radius: 3px;
+}
+.gg-bookmark {
+  border: 2px solid;
+  border-bottom: 0;
+  border-top-left-radius: 3px;
+  overflow: hidden;
+  position: relative;
+  transform: scale(var(--ggs, 1));
+  width: 14px;
+  height: 16px;
+}
+.gg-bookmark::after {
+  content: "";
+  position: absolute;
+  width: 12px;
+  height: 12px;
+  border-top: 2px solid;
+  border-right: 2px solid;
+  transform: rotate(-45deg);
+  top: 9px;
+  left: -1px;
+}
