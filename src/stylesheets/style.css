@@ -56,7 +56,8 @@ h3 {
 /* Custom CSS properties */
 :root {
   /* Primary Colors */
-  --color-primary: #4b4b4b;
+  --color-primary: #7e7d7d;
+  --color-primary-darker: #4b4b4b;
   --color-primary-lighter: #aeadad;
   /* Secondary Colors */
   --color-secondary: #464646;
@@ -64,6 +65,7 @@ h3 {
   --color-secondary-lighter: #a2a3a1;
   /* Tertiary Colors */
   --color-tertiary: #3c3c3c;
+  --color-tertiary-darker: #646464;
   --color-tertiary-lighter: #8a8b8a;
   /* Font */
   --font-primary: #fff;
@@ -277,7 +279,7 @@ h3 {
 .main {
   width: 100%;
   min-height: 100%;
-  background-color: var(--color-primary);
+  background-color: var(--color-primary-darker);
 }
 .main__content {
   position: relative;
@@ -664,4 +666,93 @@ h3 {
     width: 90%;
     margin: 1rem auto;
   }
+}
+
+/*
+================================
+ Bookmark Template
+ 
+================================
+*/
+
+.main .content__container--hero {
+  display: block;
+  width: 90%;
+  max-width: 35rem;
+  height: 30rem;
+  margin: 1rem auto;
+  color: var(--font-primary);
+  background-color: var(--color-tertiary);
+  border: 2px solid var(--color-tertiary-lighter);
+  border-radius: 12px;
+}
+/* List */
+.main__content .container__list--bookmarks {
+  width: 90%;
+  height: 90%;
+  padding: 0.5rem;
+  margin: 1rem auto;
+  border-radius: 12px;
+  background-color: var(--color-secondary);
+  overflow: auto;
+}
+.main__content .container__list--bookmarks .item__img {
+  margin-left: 1rem;
+  width: 3rem;
+  height: 3rem;
+  border: 1px solid var(--color-tertiary);
+  border-radius: 50%;
+}
+.main__content .container__list--bookmarks .item__label--name {
+  flex-grow: 1;
+  padding: 0 1rem;
+  margin: 0 1rem;
+  font-size: 1.2rem;
+  font-weight: 500;
+  cursor: inherit;
+  color: var(--font-secondary);
+}
+.main__content .container__list--bookmarks .item__label--author {
+  padding: 1rem;
+  font-size: 1.4rem;
+  font-weight: 600;
+  color: var(--font-secondary);
+}
+.main__content .container__list--bookmarks .item__icon--trash {
+  margin-right: 2rem;
+  color: var(--font-secondary);
+}
+.main__content .container__list--bookmarks .item__list {
+  display: none;
+  flex-direction: column;
+  align-items: center;
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--font-secondary);
+  transition: display 700ms;
+}
+/* --- List item (single) */
+.main .content__container--hero .list__item--single {
+  display: flex;
+  align-items: center;
+  height: 4rem;
+  padding: 0.5rem;
+  margin: 1rem 0.5rem;
+  background-color: var(--color-secondary-lighter);
+  border-radius: 12px;
+}
+.main .content__container--hero .list__item--single:hover {
+  cursor: pointer;
+  background-color: var(--color-tertiary-lighter);
+}
+/* --- List item (group) */
+.main .content__container--hero .list__item--group {
+  display: block;
+  min-height: 4rem;
+  margin: 1rem 0.5rem;
+  background-color: var(--color-primary);
+  border: 2px solid var(--color-secondary-darker);
+}
+.main .content__container--hero .list__item--group:hover {
+  cursor: pointer;
 }
