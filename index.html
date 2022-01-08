@@ -11,6 +11,10 @@
       href="https://fonts.googleapis.com/css2?family=Raleway:ital,wght@0,400;0,500;0,600;0,700;1,500&display=swap"
       rel="stylesheet"
     />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Merriweather:ital,wght@0,300;0,400;0,700;0,900;1,300;1,400&display=swap"
+      rel="stylesheet"
+    />
     <script defer type="module" src="./src/scripts/controller.js"></script>
     <title>Inspiro</title>
   </head>
@@ -21,7 +25,11 @@
         <!-- Searchbar  -->
         <form class="content__form content__form--search">
           <i class="form__icon--search gg-search"></i>
-          <input class="form__input--field" type="text" />
+          <input
+            class="form__input--field"
+            type="text"
+            placeholder="Search for a person"
+          />
         </form>
         <!-- Hamburger menu -->
         <div class="content__item content__item--menu">
@@ -55,167 +63,7 @@
 
     <main class="main">
       <!-- Page that display the different views -->
-      <div class="main__content content--flex">
-        <div class="content__container">
-          <header class="container__head">
-            <h2 class="head__header">Weekly Goals</h2>
-            <i class="head__icon--add gg-add"></i>
-          </header>
-
-          <ul class="container__list">
-            <li class="list__item item">
-              <label class="item__label">Finish deadline project</label>
-              <input class="item__input" type="checkbox" />
-            </li>
-
-            <li class="list__item">
-              <label class="item__label"
-                >Make reservations for business meeting</label
-              >
-              <input class="item__input" type="checkbox" />
-            </li>
-
-            <li class="list__item">
-              <label class="item__label"
-                >Plan for presentation to clients</label
-              >
-              <input class="item__input" type="checkbox" />
-            </li>
-          </ul>
-        </div>
-
-        <div class="content__wrapper wrapper">
-          <h2 class="wrapper__header">Jan 2022</h2>
-
-          <table class="wrapper__table table">
-            <thead class="table__head">
-              <tr class="head__row">
-                <th class="row__head" scope="col">Sun</th>
-                <th class="row__head" scope="col">Mon</th>
-                <th class="row__head" scope="col">Tue</th>
-                <th class="row__head" scope="col">Wed</th>
-                <th class="row__head" scope="col">Thu</th>
-                <th class="row__head" scope="col">Fri</th>
-                <th class="row__head" scope="col">Sat</th>
-              </tr>
-            </thead>
-
-            <tbody class="table__body body">
-              <tr class="body__row">
-                <td class="row__data">
-                  <div class="data__item">1</div>
-                </td>
-                <td class="row__data">
-                  <div class="data__item">2</div>
-                </td>
-                <td class="row__data">
-                  <div class="data__item">3</div>
-                </td>
-                <td class="row__data">
-                  <div class="data__item">4</div>
-                </td>
-                <td class="row__data">
-                  <div class="data__item">5</div>
-                </td>
-                <td class="row__data">
-                  <div class="data__item">6</div>
-                </td>
-                <td class="row__data">
-                  <div class="data__item">7</div>
-                </td>
-              </tr>
-
-              <tr class="body__row">
-                <td class="row__data">
-                  <div class="data__item">8</div>
-                </td>
-                <td class="row__data">
-                  <div class="data__item">9</div>
-                </td>
-                <td class="row__data">
-                  <div class="data__item">10</div>
-                </td>
-                <td class="row__data">
-                  <div class="data__item">11</div>
-                </td>
-                <td class="row__data">
-                  <div class="data__item">12</div>
-                </td>
-                <td class="row__data">
-                  <div class="data__item">13</div>
-                </td>
-                <td class="row__data">
-                  <div class="data__item">14</div>
-                </td>
-              </tr>
-
-              <tr class="body__row">
-                <td class="row__data">
-                  <div class="data__item">15</div>
-                </td>
-                <td class="row__data">
-                  <div class="data__item">16</div>
-                </td>
-                <td class="row__data">
-                  <div class="data__item">17</div>
-                </td>
-                <td class="row__data">
-                  <div class="data__item">18</div>
-                </td>
-                <td class="row__data">
-                  <div class="data__item">19</div>
-                </td>
-                <td class="row__data">
-                  <div class="data__item">20</div>
-                </td>
-                <td class="row__data">
-                  <div class="data__item">21</div>
-                </td>
-              </tr>
-
-              <tr class="body__row">
-                <td class="row__data">
-                  <div class="data__item">22</div>
-                </td>
-                <td class="row__data">
-                  <div class="data__item">23</div>
-                </td>
-                <td class="row__data">
-                  <div class="data__item">24</div>
-                </td>
-                <td class="row__data">
-                  <div class="data__item">25</div>
-                </td>
-                <td class="row__data">
-                  <div class="data__item">26</div>
-                </td>
-                <td class="row__data">
-                  <div class="data__item">27</div>
-                </td>
-                <td class="row__data">
-                  <div class="data__item">28</div>
-                </td>
-              </tr>
-            </tbody>
-          </table>
-
-          <nav class="wrapper__nav nav">
-            <button class="nav__btn nav__btn--prev btn">Previous</button>
-            <button class="nav__btn nav__btn--next btn">Next</button>
-          </nav>
-        </div>
-
-        <div class="content__box--quote">
-          <i class="box__icon--bookmark gg-bookmark"></i>
-          <p class="box__label box__label--quote">
-            <q>
-              Be not afraid of greatness. Some are born great, some achieve
-              greatness, and others have greatness thrust upon them
-            </q>
-          </p>
-          <p class="box__label box__label--author">William Shakespeare</p>
-        </div>
-      </div>
+      <div class="main__content"></div>
     </main>
   </body>
 </html>
