@@ -20,10 +20,10 @@
   </head>
   <body>
     <!-- Fixed at top -->
-    <header class="head">
+    <header class="head--top">
       <div class="head__content">
-        <!-- Searchbar  -->
-        <form class="content__form content__form--search">
+        <!-- Search query form  -->
+        <form class="content__form--search">
           <i class="form__icon--search gg-search"></i>
           <input
             class="form__input--field"
@@ -31,41 +31,38 @@
             placeholder="Search for a person"
           />
         </form>
-        <!-- Hamburger menu -->
-        <div class="content__item content__item--menu">
+        <!-- Menu button -->
+        <div class="content__item--menu">
           <i class="item__icon--menu gg-menu"></i>
         </div>
         <!-- Toggle menu -->
         <nav class="content__nav--menu hidden">
           <!-- Links to different views -->
-          <ul class="nav__tabs">
+          <ul class="content__nav-tabs">
             <li class="tabs__item">
-              <a class="item__link item__link--home" href="/">Home</a>
+              <a class="item-link item-link--home" href="/">Home</a>
             </li>
             <!-- Quotes -->
             <li class="tabs__item">
-              <a class="item__link item__link--quotes" href="/quotes">Quotes</a>
+              <a class="item-link item-link--quotes" href="/quotes">Quotes</a>
             </li>
             <!-- Role models -->
             <li class="tabs__item">
-              <a class="item__link item__link--models" href="/models">Models</a>
+              <a class="item-link item-link--models" href="/models">Models</a>
             </li>
             <!-- SMART Goals -->
             <li class="tabs__item">
-              <a class="item__link item__link--aspirations" href="/aspirations"
-                >Aspirations</a
-              >
+              <a class="item-link item-link--goals" href="/goals">Goals</a>
             </li>
           </ul>
         </nav>
       </div>
     </header>
-
+    <!-- Covers whole page -->
     <main class="main">
       <!-- Page that displays the different views -->
       <div class="main__content"></div>
     </main>
-
     <!-- Modal -->
     <div class="modal hidden">
       <button class="modal__btn modal__btn--close">&times;</button>
