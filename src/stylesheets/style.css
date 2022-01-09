@@ -322,18 +322,19 @@ h3 {
  *
  * Main
  *
- * * * Container
+ * * * Container Aside
  *
  *
  */
 
-.main .content__container {
+.main .content__container--aside {
   display: block;
   width: 80%;
   max-width: 30rem;
-  height: 22rem;
+  min-height: 22rem;
   padding: 1rem;
   margin: 1rem auto;
+  overflow: hidden;
   color: var(--font-primary);
   background-color: var(--color-tertiary-darker);
   border: 2px solid var(--color-tertiary-lighter);
@@ -342,33 +343,57 @@ h3 {
 /* Head */
 .main__content .container__head {
   display: flex;
-  width: 90%;
+  flex-wrap: wrap;
+  width: 100%;
   align-items: center;
-  justify-content: space-between;
+  justify-content: center;
 }
-.main .content__container .head__header {
-  display: block;
+.main .content__container--aside .head__header {
+  width: 70%;
   margin: 0 auto;
   font-size: 2rem;
   font-weight: 400;
   text-decoration: underline;
 }
-.main .content__container .head__icon--add {
+.main .content__container--aside .head__icon--add {
   --ggs: 1.3;
+  margin-right: 2rem;
   cursor: pointer;
+}
+/* Form inline */
+.main .content__container--aside .head__form--inline {
+  display: none;
+  align-items: center;
+  width: 90%;
+  padding: 0.5rem;
+  margin-top: 0.5rem;
+}
+.main .content__container--aside .form__input--quota {
+  display: block;
+  width: 90%;
+  padding: 0.25rem;
+  margin: 0 auto;
+  font-size: 1rem;
+  text-align: center;
+}
+.main .content__container--aside .form__icon--enter:hover {
+  cursor: pointer;
+  transform: scale(110%);
+  transition: transform 400ms;
 }
 /* List */
 .main__content .container__list {
   width: 90%;
+  max-height: 14rem;
   height: 80%;
   padding: 1rem;
-  margin: 1rem auto;
+  margin: 1rem auto 0;
   border-radius: 12px;
   background-color: var(--color-secondary);
   overflow: auto;
 }
 /* --- List item */
-.main .content__container .list__item {
+.main .content__container--aside .list__item {
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -387,7 +412,7 @@ h3 {
 }
 
 @media only screen and (min-width: 768px) {
-  .main .content__container {
+  .main .content__container--aside {
     order: 3;
     width: 30%;
     height: initial;
@@ -398,12 +423,12 @@ h3 {
  *
  * Main
  *
- * * * Wrapper
+ * * * Wrapper Hero
  *
  *
  */
 
-.main .content__wrapper {
+.main .content__wrapper--hero {
   display: block;
   width: 90%;
   margin: 1rem auto;
@@ -441,7 +466,7 @@ h3 {
 }
 
 @media only screen and (min-width: 768px) {
-  .main .content__wrapper {
+  .main .content__wrapper--hero {
     order: 2;
     width: 60%;
     max-width: 35rem;
