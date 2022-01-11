@@ -1,13 +1,14 @@
 "use strict";
 
-// Private variables
-const itemEl = document.querySelector(".content__nav-item");
-const tabsEl = document.querySelector(".content__nav-tabs");
-const toggleTabs = () => tabsEl.classList.toggle("hidden");
-
 function menuView() {
+  // Private variables
+  const itemEl = document.querySelector(".content__nav-item");
+  const tabsEl = document.querySelector(".content__nav-tabs");
+  // Private methods
+  const toggleTabs = () => tabsEl.classList.toggle("hidden");
+  // Add event listner
   itemEl.addEventListener("click", toggleTabs);
-  // Add handlers
+  // Public methods
   const addHandlerClick = function (handler) {
     tabsEl.addEventListener("click", function (e) {
       const clicked = e.target.closest(".item-link");
@@ -16,10 +17,11 @@ function menuView() {
       handler(e);
     });
   };
-
-  return {
+  // Public variables
+  const publicApi = {
     addHandlerClick,
   };
+  return publicApi;
 }
 
 export default menuView();
