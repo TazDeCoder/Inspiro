@@ -71,11 +71,13 @@ h3 {
   --font-primary: #fff;
   --font-primary-hover: #ccc;
   --font-secondary: #000;
+  --font-tertiary: grey;
   /* Input */
   --input-primary: #fff;
   --input-primary-hover: #ccc;
-  --input-tertiary: #3c3c3c;
-  --input-tertiary-hover: #f00;
+  --input-secondary: #3c3c3c;
+  --input-tertiary: lightgreen;
+  --input-tertiary-darker: green;
 }
 
 /*
@@ -103,7 +105,7 @@ h3 {
   position: fixed;
   top: 0;
   left: 0;
-  z-index: 10;
+  z-index: 100;
   width: 100%;
   height: 100%;
   backdrop-filter: blur(3px);
@@ -121,7 +123,7 @@ h3 {
   position: fixed;
   top: 0;
   left: 0;
-  z-index: 10;
+  z-index: 100;
   width: 100%;
   min-height: 5rem;
   padding: 1rem;
@@ -393,7 +395,7 @@ h3 {
 .main .content__container-head .form__icon--enter:hover {
   --ggs: 1.2;
   cursor: pointer;
-  color: var(--input-tertiary-hover);
+  color: var(--input-tertiary-darker);
   transition: transform 400ms;
 }
 
@@ -519,7 +521,7 @@ h3 {
   padding: 2rem;
   border: 2px solid var(--color-tertiary-lighter);
 }
-.main .content__wrapper-table .data__item {
+.main .content__wrapper-table .data__item-wrapper {
   position: absolute;
   top: 0;
   right: 0;
@@ -530,11 +532,27 @@ h3 {
   font-weight: 500;
   color: var(--font-primary);
   text-align: right;
-  background-color: var(--input-tertiary);
+  background-color: var(--input-secondary);
 }
-.main .content__wrapper-table .data__item:hover {
+.main .content__wrapper-table .data__item--null {
+  color: var(--font-tertiary);
+}
+.main .content__wrapper-table .data__item--today {
+  border: 2px solid var(--input-tertiary);
+}
+.main .content__wrapper-table .data__item-dot {
+  position: absolute;
+  top: 50%;
+  left: 20%;
+  border: 2px solid var(--input-tertiary-darker);
+  border-radius: 50%;
   cursor: pointer;
-  background-color: var(--input-tertiary-hover);
+  width: 1rem;
+  height: 1rem;
+  z-index: 10;
+}
+.main .content__wrapper-table .data__item--active {
+  background-color: var(--input-tertiary);
 }
 /* Nav buttons */
 .main .content__wrapper-nav .nav__btn {
@@ -547,7 +565,7 @@ h3 {
   background-color: var(--input-primary);
 }
 .main .content__wrapper-nav .nav__btn:hover {
-  border: 2px solid var(--input-tertiary-hover);
+  border: 2px solid var(--input-tertiary);
 }
 
 /* 
@@ -579,7 +597,7 @@ h3 {
 }
 .main .content__container-icon--bookmark:hover {
   cursor: pointer;
-  color: var(--input-tertiary-hover);
+  color: var(--input-tertiary-darker);
 }
 .main__content .container__label--quote {
   display: block;
@@ -948,7 +966,7 @@ h3 {
   position: fixed;
   top: 50%;
   left: 50%;
-  z-index: 100;
+  z-index: 1000;
   width: 90%;
   max-width: 40rem;
   padding: 1rem;
