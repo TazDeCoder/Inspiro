@@ -3,14 +3,17 @@
 import * as model from "./model.js";
 import templates from "./templates.js";
 import menuView from "./views/menuView.js";
+import searchView from "./views/searchView.js";
+import articleView from "./views/articleView.js";
 import calanderView from "./views/calendarView.js";
 
-const contentMain = document.querySelector(".main__content");
+export const contentMain = document.querySelector(".main__content");
 
 // HTML templates
 const routes = {
   404: templates.error,
   "/": templates.home,
+  "/article": templates.article,
   "/quotes": templates.bookmark,
   "/models": templates.bookmark,
   "/goals": templates.gallery,
@@ -41,6 +44,13 @@ async function handleLocation() {
       );
       calanderView.addHandlerClick(controlCalanderPagination);
       break;
+    case "/article":
+      if (!model.state.search.query) return;
+      const searchResult = await model.getSearchResult(
+        model.state.search.query
+      );
+      articleView.render(searchResult);
+      break;
     case "/quotes":
       break;
     case "/models":
@@ -52,6 +62,12 @@ async function handleLocation() {
 
 function controlMenu(evt) {
   route(evt);
+}
+
+async function controlSearch(query) {
+  await model.getSearchResult(query);
+  window.history.pushState({}, "", "/article");
+  handleLocation();
 }
 
 function controlCalanderPagination(month) {
@@ -67,6 +83,7 @@ function controlCalanderPagination(month) {
 function init() {
   // Add event handlers
   menuView.addHandlerClick(controlMenu);
+  searchView.addHandlerSearch(controlSearch);
   // Add event listeners
   window.addEventListener("popstate", handleLocation);
   window.addEventListener("load", handleLocation);

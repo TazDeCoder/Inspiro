@@ -1,6 +1,9 @@
 "use strict";
 
-const nameMonths = {
+import { API_URL } from "./config.js";
+import { getJSON } from "./helpers.js";
+
+const nameMonths = Object.freeze({
   JAN: 1,
   FEB: 2,
   MAR: 3,
@@ -13,11 +16,16 @@ const nameMonths = {
   OCT: 10,
   NOV: 11,
   DEC: 12,
-};
+});
 
 export const state = {
+  search: {},
   calendar: {},
 };
+
+////////////////////////////////////////////////
+////// Calendar Functionalities
+///////////////////////////////////////////////
 
 export function getCurrentDate() {
   // Helper function
@@ -67,4 +75,37 @@ export function getCurrentMonth() {
     (val) => val[1] === state.calendar.currMonth + 1
   );
   return currMonth;
+}
+
+////////////////////////////////////////////////
+////// Search Functionalities
+///////////////////////////////////////////////
+
+export async function getSearchResult(query) {
+  const searchParams = new URLSearchParams({
+    origin: "*",
+    action: "query",
+    prop: "extracts|pageimages",
+    piprop: "original",
+    titles: query.toLowerCase(),
+    redirects: true,
+    converttitles: true,
+    format: "json",
+  });
+  const url = `${API_URL}?${searchParams}`;
+  const data = await getJSON(url);
+  const { pages } = data.query;
+  const [page] = Object.values(pages);
+  const { title } = page;
+  const imageSrc = page.original?.source ?? "";
+  // Parse data
+  const parser = new DOMParser();
+  const htmlDOM = parser.parseFromString(page.extract, "text/html");
+  const bodyDOM = htmlDOM.body;
+  const contentsArr = [...bodyDOM.children].filter(
+    (el) => el.nodeName === "H2" || el.nodeName === "H3"
+  );
+  const contextArr = [...bodyDOM.children].map((el) => el.outerHTML);
+  state.search.query = query;
+  return { title, image: imageSrc, contentsArr, contextArr };
 }
