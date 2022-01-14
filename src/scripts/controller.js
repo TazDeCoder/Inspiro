@@ -3,21 +3,20 @@
 import * as model from "./model.js";
 import templates from "./templates.js";
 import menuView from "./views/menuView.js";
+// Header
 import searchView from "./views/searchView.js";
 import articleView from "./views/articleView.js";
-import calanderView from "./views/calendarView.js";
+// Homepage
+import buildTargetView from "./views/targetView.js";
+import buildCalendarView from "./views/calendarView.js";
+import buildQuoteView from "./views/quoteView.js";
 
 export const contentMain = document.querySelector(".main__content");
 
-// HTML templates
-const routes = {
-  404: templates.error,
-  "/": templates.home,
-  "/article": templates.article,
-  "/quotes": templates.bookmark,
-  "/models": templates.bookmark,
-  "/goals": templates.gallery,
-};
+// Views
+const targetView = buildTargetView();
+const calendarView = buildCalendarView();
+const quoteView = buildQuoteView();
 
 function route(evt = window.event) {
   evt.preventDefault();
@@ -28,21 +27,30 @@ function route(evt = window.event) {
 async function handleLocation() {
   // Get current url pathname
   const pathName = window.location.pathname;
-  // Find HTML template based on path
-  const htmlTemplate = routes[pathName] || routes[404];
   // Now generate the HTML template markup in placeholder
-  contentMain.innerHTML = await htmlTemplate();
-  // Render view
+  contentMain.innerHTML = "";
+  // Render pathname view
   switch (pathName) {
     case "/":
-      const date = model.getCurrentDate();
-      date.currMonth = model.state.calendar.currMonth + 1;
-      calanderView.render(date);
-      calanderView.updateHeader(
-        model.getCurrentMonth(),
-        model.state.calendar.currYear
+      // Target
+      targetView.renderHead();
+      targetView.renderList(model.state.targets);
+      targetView.addHandlerSubmit(controlTarget);
+      contentMain.insertAdjacentElement("beforeend", targetView.base);
+      // Calendar
+      model.loadCalendar();
+      calendarView.renderTable(model.state.calendar);
+      calendarView.renderNav(model.state.calendar);
+      calendarView.updateHeader(
+        model.state.calendar.formatMonth,
+        model.state.calendar.year
       );
-      calanderView.addHandlerClick(controlCalanderPagination);
+      calendarView.addHandlerClick(controlCalanderPagination);
+      contentMain.insertAdjacentElement("beforeend", calendarView.base);
+      // Quote
+      await model.loadQuote();
+      quoteView.render(model.state.quote);
+      contentMain.insertAdjacentElement("beforeend", quoteView.base);
       break;
     case "/article":
       if (!model.state.search.query) return;
@@ -70,13 +78,18 @@ async function controlSearch(query) {
   handleLocation();
 }
 
-function controlCalanderPagination(month) {
-  const date = model.setCurrentDate(month);
-  date.currMonth = model.state.calendar.currMonth + 1;
-  calanderView.render(date);
-  calanderView.updateHeader(
-    model.getCurrentMonth(),
-    model.state.calendar.currYear
+function controlTarget(targetQuota) {
+  model.addTargetQuota(targetQuota);
+  targetView.renderList(model.state.targets);
+}
+
+function controlCalanderPagination(month, reverse) {
+  model.setCalendar(month, reverse);
+  calendarView.renderTable(model.state.calendar);
+  calendarView.renderNav(model.state.calendar);
+  calendarView.updateHeader(
+    model.state.calendar.formatMonth,
+    model.state.calendar.year
   );
 }
 
