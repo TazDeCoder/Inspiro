@@ -379,11 +379,13 @@ h3 {
 /* Form inline */
 .main .content__container--aside .head__form--inline {
   display: none;
-  display: flex;
   align-items: center;
   width: 90%;
   padding: 0.5rem;
   margin-top: 0.5rem;
+}
+.main .content__container--aside .head__form--display {
+  display: flex;
 }
 .main .content__container-head .form__input--quota {
   width: 80%;
@@ -395,7 +397,7 @@ h3 {
 .main .content__container-head .form__icon--enter:hover {
   --ggs: 1.2;
   cursor: pointer;
-  color: var(--input-tertiary-darker);
+  color: var(--input-tertiary);
   transition: transform 400ms;
 }
 
@@ -597,7 +599,7 @@ h3 {
 }
 .main .content__container-icon--bookmark:hover {
   cursor: pointer;
-  color: var(--input-tertiary-darker);
+  color: var(--input-tertiary);
 }
 .main__content .container__label--quote {
   display: block;
@@ -696,10 +698,10 @@ h3 {
     flex-wrap: wrap;
   }
   .main__content .head__img {
-    width: 50%;
+    width: 70%;
   }
   .main__content .head__list {
-    width: 50%;
+    width: 70%;
   }
 }
 @media only screen and (min-width: 768px) {
@@ -896,7 +898,11 @@ h3 {
 .main__content .head__icon--add {
   --ggs: 1.1;
   margin-top: 0.25rem;
+}
+
+.main__content .head__icon--add:hover {
   cursor: pointer;
+  color: var(--input-tertiary);
 }
 
 /* 
