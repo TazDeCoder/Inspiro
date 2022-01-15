@@ -1,7 +1,10 @@
 "use strict";
 
+import _ from "lodash";
+import Quotesy from "quotesy/lib/index.js";
+
 import { getJSON } from "./helpers.js";
-import { API_URL_WIKI, API_URL_QUOTE } from "./config.js";
+import { API_URL, API_URL_QUOTE } from "./config.js";
 
 const nameMonths = new Map([
   [0, "JAN"],
@@ -21,8 +24,16 @@ const nameMonths = new Map([
 const currDate = new Date();
 
 export const state = {
-  search: {},
+  search: {
+    query: "",
+    imageSrc: "",
+    title: "",
+    pageContents: [],
+    pageText: [],
+    list: [],
+  },
   calendar: {
+    markedDays: [],
     formatDate: "",
     formatMonth: "",
     month: 0,
@@ -33,6 +44,10 @@ export const state = {
   },
   quote: {},
   targets: [],
+  bookmarks: {
+    models: [],
+    quotes: [],
+  },
 };
 
 ////////////////////////////////////////////////
@@ -61,6 +76,11 @@ export function addTargetQuota(newTargetQuota) {
 const getFirstDayIndex = (year, month) => new Date(year, month).getDay();
 
 const getLastDay = (year, month) => new Date(year, month, 0).getDate();
+
+// Local Storage
+function persistMarkedDays() {
+  localStorage.setItem("markedDays", JSON.stringify(state.calendar.markedDays));
+}
 
 // Export functions
 export function loadCalendar() {
@@ -98,7 +118,22 @@ export function setCalendar(month, reverse) {
   // Set selected month
   state.calendar.month = month;
   state.calendar.formatMonth = nameMonths.get(month);
-  console.log(state.calendar);
+}
+
+export function updateMarkedDays(date, remove) {
+  const [month, day] = date.split("-");
+  const dateObj = { month, day };
+  if (!remove) state.calendar.markedDays.push(dateObj);
+  if (remove) {
+    const idx = _.findIndex(state.calendar.markedDays, dateObj);
+    state.calendar.markedDays.splice(idx, 1);
+  }
+  persistMarkedDays();
+}
+
+export function restoreMarkedDays() {
+  const storage = localStorage.getItem("markedDays");
+  if (storage) state.calendar.markedDays = JSON.parse(storage);
 }
 
 ////////////////////////////////////////////////
@@ -106,16 +141,21 @@ export function setCalendar(month, reverse) {
 ///////////////////////////////////////////////
 
 export async function loadQuote() {
-  const url = API_URL_QUOTE;
-  const data = await getJSON(url);
-  state.quote = data[Math.floor(Math.random() * data.length)];
+  if (!_.isEmpty(state.quote)) return;
+  state.quote = Quotesy.random();
 }
 
 ////////////////////////////////////////////////
 ////// Search Functionalities
 ///////////////////////////////////////////////
 
+export function loadSearchList() {
+  const authors = new Set(Quotesy.parse_json().map((quote) => quote.author));
+  state.search.list = Array.from(authors);
+}
+
 export async function getSearchResult(query) {
+  if (!query) return;
   const searchParams = new URLSearchParams({
     origin: "*",
     action: "query",
@@ -126,20 +166,41 @@ export async function getSearchResult(query) {
     converttitles: true,
     format: "json",
   });
-  const url = `${API_URL_WIKI}?${searchParams}`;
+  const url = `${API_URL}?${searchParams}`;
   const data = await getJSON(url);
   const { pages } = data.query;
   const [page] = Object.values(pages);
-  const { title } = page;
-  const imageSrc = page.original?.source ?? "";
+  state.search.title = page.title;
+  state.search.imageSrc = page.original?.source ?? "";
   // Parse data
   const parser = new DOMParser();
   const htmlDOM = parser.parseFromString(page.extract, "text/html");
   const bodyDOM = htmlDOM.body;
-  const contentsArr = [...bodyDOM.children].filter(
-    (el) => el.nodeName === "H2" || el.nodeName === "H3"
+  state.search.pageContents = [...bodyDOM.children].filter(
+    (el) => el.nodeName === "H2"
   );
-  const contextArr = [...bodyDOM.children].map((el) => el.outerHTML);
+  state.search.pageText = [...bodyDOM.children].map((el) => el.outerHTML);
   state.search.query = query;
-  return { title, image: imageSrc, contentsArr, contextArr };
+}
+
+////////////////////////////////////////////////
+////// Bookmark Functionalities
+///////////////////////////////////////////////
+
+function persistModelBookmarks() {
+  localStorage.setItem(
+    "modelBookmarks",
+    JSON.stringify(state.bookmarks.models)
+  );
+}
+
+export function addModelBookmark(model) {
+  const modelObj = { name: model };
+  state.bookmarks.models.push(modelObj);
+  persistModelBookmarks();
+}
+
+export function restoreModelBookmarks() {
+  const storage = localStorage.getItem("modelBookmarks");
+  if (storage) state.bookmarks.models = JSON.parse(storage);
 }
