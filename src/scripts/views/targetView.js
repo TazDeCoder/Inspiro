@@ -1,5 +1,8 @@
 "use strict";
 
+import Handlebars from "handlebars/dist/handlebars.js";
+import _ from "lodash";
+
 export default function buildTargetView() {
   let formEl, inputEl;
   // Create base parent
@@ -55,7 +58,7 @@ export default function buildTargetView() {
   };
 
   const renderList = function (data) {
-    if (!data || (Array.isArray(data) && data.length === 0)) return;
+    if (!_.isObject(data)) return;
     const markup = generateTargetQuotaMarkup(data);
     clearList();
     listEl.insertAdjacentHTML("afterbegin", markup);

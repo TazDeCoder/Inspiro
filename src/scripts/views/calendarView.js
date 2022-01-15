@@ -1,6 +1,9 @@
 "use strict";
 
-import templates from "../templates.js";
+import Handlebars from "handlebars/dist/handlebars.js";
+import _ from "lodash";
+
+import sources from "../sources.js";
 
 export default function buildCalendarView() {
   // Create base parent
@@ -21,61 +24,66 @@ export default function buildCalendarView() {
   base.appendChild(navEl);
   // Private methods
   const generateCalanderMarkup = ({
+    markedDays,
     firstDayIndex,
     prevLastDay,
     lastDay,
     month,
     formatDate,
   }) => {
-    const calendarInput = {
+    const calendarData = {
       days: ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"],
+      markedDays,
       firstDayIndex,
       prevLastDay,
       lastDay,
       currMonth: month,
       today: formatDate,
     };
-    const template = Handlebars.compile(templates.calander());
-    return template(calendarInput);
+    const template = Handlebars.compile(sources.calander());
+    return template(calendarData);
   };
 
-  const generateNavMarkup = ({ month: currMonth }) => {
-    const prevMonth = currMonth === 0 ? 11 : currMonth - 1;
-    const nextMonth = currMonth === 11 ? 0 : currMonth + 1;
+  const generateNavMarkup = ({ month }) => {
+    const prevMonth = month === 0 ? 11 : month - 1;
+    const nextMonth = month === 11 ? 0 : month + 1;
     const navInput = {
       prevMonth,
       nextMonth,
     };
-    const template = Handlebars.compile(templates.calanderPagination());
+    const template = Handlebars.compile(sources.calanderPagination());
     return template(navInput);
   };
-  // Clear inner HTML functions
-  const clearTable = () => (tableEl.innerHTML = "");
-  const clearNav = () => (navEl.innerHTML = "");
-  // Add event listeners
-  tableEl.addEventListener("click", function (e) {
-    const clicked = e.target.closest(".data__item-dot");
-    if (!clicked) return;
-    clicked.classList.toggle("data__item--active");
-  });
   // Public methods
   const renderTable = function (data) {
-    if (!data || data.length === 0) return;
+    if (!_.isObject(data)) return;
     const tableMarkup = generateCalanderMarkup(data);
-    clearTable();
     tableEl.innerHTML = tableMarkup;
   };
 
   const renderNav = function (data) {
-    if (!data || data.length === 0) return;
+    if (!_.isObject(data)) return;
     const navMarkup = generateNavMarkup(data);
-    clearNav();
     navEl.innerHTML = navMarkup;
   };
   // Updates calendar header
   const updateHeader = (month, year) =>
     (headerEl.textContent = `${month}, ${year}`);
   // Add event handlers
+  const addHandlerToggle = function (handler) {
+    tableEl.addEventListener("click", function (e) {
+      const clicked = e.target.closest(".data__item-dot");
+      if (!clicked) return;
+      clicked.classList.toggle("data__item--active");
+      const cell = clicked.closest(".row-data");
+      const cellDate = cell.getAttribute("data-date");
+      const removeDate = clicked.classList.contains("data__item--active")
+        ? false
+        : true;
+      console.log(cellDate);
+      handler(cellDate, removeDate);
+    });
+  };
   const addHandlerClick = function (handler) {
     navEl.addEventListener("click", function (e) {
       let reverse = false;
@@ -91,6 +99,7 @@ export default function buildCalendarView() {
     renderTable,
     renderNav,
     updateHeader,
+    addHandlerToggle,
     addHandlerClick,
     base,
   };

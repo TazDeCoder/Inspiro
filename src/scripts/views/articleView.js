@@ -1,9 +1,12 @@
 "use strict";
 
-import templates from "../templates.js";
+import Handlebars from "handlebars/dist/handlebars.js";
+import _ from "lodash";
+
+import sources from "../sources.js";
 
 export default function buildArticleView() {
-  let listEl;
+  let iconEl, listEl, bookmarkTitle;
   // Creating base parent
   const base = document.createElement("div");
   // Private methods
@@ -13,8 +16,9 @@ export default function buildArticleView() {
     pageContents,
     pageText,
   }) => {
+    bookmarkTitle = title;
     const articleInput = { title, imageSrc, pageContents, pageText };
-    const template = Handlebars.compile(templates.article());
+    const template = Handlebars.compile(sources.article());
     return template(articleInput);
   };
 
@@ -29,16 +33,26 @@ export default function buildArticleView() {
   };
   // Public methods
   const render = function (data) {
-    if (!data || data.length === 0);
+    if (!_.isObject(data)) return;
     const articleMarkup = generateArticleMarkup(data);
     clear();
     base.innerHTML = articleMarkup;
+    iconEl = base.querySelector(".head__icon--bookmark");
     listEl = base.querySelector(".head__list");
     listEl.addEventListener("click", handleClick);
+  };
+  const addHandlerToggle = function (handler) {
+    iconEl.addEventListener("click", function (e) {
+      e.preventDefault();
+      const clicked = e.target;
+      if (!clicked) return;
+      handler(bookmarkTitle);
+    });
   };
   // Public API
   const publicApi = {
     render,
+    addHandlerToggle,
     base,
   };
   return publicApi;

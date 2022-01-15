@@ -1,6 +1,9 @@
 "use strict";
 
-import templates from "../templates.js";
+import Handlebars from "handlebars/dist/handlebars.js";
+import _ from "lodash";
+
+import sources from "../sources.js";
 
 export default function buildQuoteView() {
   // Create base parent
@@ -23,13 +26,13 @@ export default function buildQuoteView() {
   // Private methods
   const generateQuoteMarkup = ({ text, author }) => {
     const quoteInput = { text, author };
-    const template = Handlebars.compile(templates.quote());
+    const template = Handlebars.compile(sources.quote());
     return template(quoteInput);
   };
   const clear = () => (base.innerHTML = "");
   // Public methods
   const render = function (data) {
-    if (!data || (Array.isArray(data) && data.length === 0)) return;
+    if (!_.isObject(data)) return;
     const quoteMarkup = generateQuoteMarkup(data);
     clear();
     base.innerHTML = quoteMarkup;
