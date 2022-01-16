@@ -6,6 +6,7 @@ import _ from "lodash";
 import sources from "../sources.js";
 
 export default function buildQuoteView() {
+  let bookmarkText, bookmarkAuthor;
   // Create base parent
   const base = document.createElement("div");
   base.classList.add("content__container--top");
@@ -26,6 +27,7 @@ export default function buildQuoteView() {
   // Private methods
   const generateQuoteMarkup = ({ text, author }) => {
     const quoteInput = { text, author };
+    [bookmarkText, bookmarkAuthor] = [text, author];
     const template = Handlebars.compile(sources.quote());
     return template(quoteInput);
   };
@@ -37,16 +39,25 @@ export default function buildQuoteView() {
     clear();
     base.innerHTML = quoteMarkup;
   };
-  // TODO Bookmark quote
-  // const addHandlerClick = function (handler) {
-  //   parentEl.addEventListener("click", function (e) {
-  //     const clicked = e.target.closest(".gg-bookmarks");
-  //     if (!clicked) return;
-  //   });
-  // };
+  const addHandlerToggle = function (handler) {
+    if (base.getAttribute("data-event-click") !== "true") {
+      base.setAttribute("data-event-click", "true");
+      base.addEventListener("click", function (e) {
+        const clicked = e.target.closest(".gg-bookmark");
+        if (!clicked) return;
+        clicked.classList.toggle("bookmark--active");
+        const data = {
+          text: bookmarkText,
+          author: bookmarkAuthor,
+        };
+        handler(data);
+      });
+    }
+  };
   // Public API
   const publicApi = {
     render,
+    addHandlerToggle,
     base,
   };
   return publicApi;

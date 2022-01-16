@@ -17,6 +17,7 @@ export default function buildArticleView() {
     pageText,
   }) => {
     bookmarkTitle = title;
+    bookmarkImageSrc = imageSrc;
     const articleInput = { title, imageSrc, pageContents, pageText };
     const template = Handlebars.compile(sources.article());
     return template(articleInput);
@@ -41,17 +42,34 @@ export default function buildArticleView() {
     listEl = base.querySelector(".head__list");
     listEl.addEventListener("click", handleClick);
   };
+
+  const renderError = function () {
+    const markup = `
+      <p class="error__label">
+        Page couldn't be found, or is missing
+      </p>
+    `;
+    base.innerHTML = markup;
+  };
+
+  // Add event handler
   const addHandlerToggle = function (handler) {
-    iconEl.addEventListener("click", function (e) {
-      e.preventDefault();
-      const clicked = e.target;
-      if (!clicked) return;
-      handler(bookmarkTitle);
-    });
+    if (iconEl.getAttribute("data-event-click") !== "true") {
+      iconEl.setAttribute("data-event-click", "true");
+      iconEl.addEventListener("click", function () {
+        iconEl.classList.toggle("bookmark--active");
+        const data = {
+          name: bookmarkTitle,
+          imageSrc: bookmarkImageSrc,
+        };
+        handler(data);
+      });
+    }
   };
   // Public API
   const publicApi = {
     render,
+    renderError,
     addHandlerToggle,
     base,
   };

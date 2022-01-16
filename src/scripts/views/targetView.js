@@ -18,12 +18,12 @@ export default function buildTargetView() {
   base.appendChild(headEl);
   base.appendChild(listEl);
   // Private methods
-  const generateTargetQuotaMarkup = function (targets) {
-    const targetQuotaInput = {
+  const generateTargetQuotaMarkup = function ({ targets }) {
+    const targetQuotaData = {
       targets,
     };
     const template = Handlebars.compile("{{targetData targets}}");
-    return template(targetQuotaInput);
+    return template(targetQuotaData);
   };
 
   const clearList = () => (listEl.innerHTML = "");
@@ -65,31 +65,54 @@ export default function buildTargetView() {
   };
   // Add event handlers
   const addHandlerSubmit = function (handler) {
-    formEl.addEventListener("submit", function (e) {
-      e.preventDefault();
-      inputEl = document.querySelector(".form__input--quota");
-      const quota = inputEl.value;
-      inputEl.value = "";
-      formEl.classList.toggle("head__form--display");
-      handler(quota);
-    });
+    if (
+      formEl.getAttribute("data-event-submit") !== "true" &&
+      formEl.getAttribute("data-event-click") !== "true"
+    ) {
+      formEl.setAttribute("data-event-submit", "true");
+      formEl.addEventListener("submit", function (e) {
+        e.preventDefault();
+        inputEl = document.querySelector(".form__input--quota");
+        const quota = inputEl.value;
+        inputEl.value = "";
+        formEl.classList.toggle("head__form--display");
+        handler(quota);
+      });
 
-    formEl.addEventListener("click", function (e) {
-      e.preventDefault();
-      inputEl = document.querySelector(".form__input--quota");
-      const clicked = e.target.closest(".gg-enter");
-      if (!clicked) return;
-      const quota = inputEl.value;
-      inputEl.value = "";
-      formEl.classList.toggle("head__form--display");
-      handler(quota);
-    });
+      formEl.setAttribute("data-event-submit", "true");
+      formEl.addEventListener("click", function (e) {
+        e.preventDefault();
+        inputEl = document.querySelector(".form__input--quota");
+        const clicked = e.target.closest(".gg-enter");
+        if (!clicked) return;
+        const quota = inputEl.value;
+        inputEl.value = "";
+        formEl.classList.toggle("head__form--display");
+        handler(quota);
+      });
+    }
+  };
+
+  const addHandlerToggle = function (handler) {
+    if (listEl.getAttribute("data-event-toggle") !== "true") {
+      listEl.addEventListener("click", function (e) {
+        const elementClicked = e.target;
+        elementClicked.setAttribute("data-event-toggle", "true");
+        const clicked = e.target.closest(".item__input");
+        if (!clicked) return;
+        const toggleBoxes = Array.from(listEl.querySelectorAll(".item__input"));
+        const allChecked = toggleBoxes.every((toggleBox) => toggleBox.checked);
+        const id = clicked.closest(".list-item").getAttribute("data-id");
+        handler(id, allChecked);
+      });
+    }
   };
   // Public API
   const publicApi = {
     renderHead,
     renderList,
     addHandlerSubmit,
+    addHandlerToggle,
     base,
   };
   return publicApi;

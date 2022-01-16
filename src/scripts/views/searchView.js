@@ -6,18 +6,19 @@ import _ from "lodash";
 import sources from "../sources.js";
 
 function searchView() {
-  let listItems;
+  let listItems = [];
   // Private variables
   const headEl = document.querySelector(".head--top");
-  const parentEl = document.querySelector(".content__form--search");
+  const parentEl = document.querySelector(".content__wrapper--search");
+  const formEl = document.querySelector(".wrapper__form-search");
   const iconEl = document.querySelector(".form__icon--search");
   const inputEl = document.querySelector(".form__input--field");
   const listEl = document.querySelector(".form__list--autofill");
   const headHeight = headEl.getBoundingClientRect().height;
   // Private methods
-  const generateListMarkup = function ({ list }) {
+  const generateListMarkup = function ({ suggestions }) {
     const listData = {
-      listItems: list,
+      suggestions,
     };
     const template = Handlebars.compile(sources.searchList());
     return template(listData);
@@ -31,31 +32,13 @@ function searchView() {
       headEl.classList.remove("head--hide");
     }
   });
-
-  inputEl.addEventListener("input", function (e) {
-    if (inputEl.value === "")
-      listItems.forEach((item) => (item.style.display = ""));
-    let searches = [];
-    const limit = 5;
-    const search = inputEl.value.toLowerCase();
-    for (let i of listItems) {
-      const item = i.innerHTML.toLowerCase();
-      if (item.indexOf(search) === -1) {
-        i.style.display = "block";
-        searches.push(i);
-      } else {
-        i.style.display = "";
-      }
-      if (searches.length === limit) break;
-    }
-  });
-  // Add event handeler
+  // Add event handler
   const addHandleClick = function () {
     listEl.addEventListener("click", function (e) {
       const clicked = e.target.closest("li");
       if (!clicked) return;
       inputEl.value = clicked.textContent;
-      listItems.forEach((item) => (item.style.display = ""));
+      listItems.forEach((item) => (item.style.display = "none"));
     });
   };
   // Public methods
@@ -63,11 +46,22 @@ function searchView() {
     if (!_.isObject(data)) return;
     const listMarkup = generateListMarkup(data);
     listEl.innerHTML = listMarkup;
-    listItems = document.querySelectorAll("li");
+    listItems = listEl.querySelectorAll("li");
+    listEl.classList.remove("hide");
     addHandleClick();
   };
+  // Add event handlers
+  const addHandlerInput = function (handler) {
+    inputEl.addEventListener("keyup", function () {
+      const searchInput = inputEl.value;
+      if (!searchInput) return listEl.classList.add("hide");
+      listEl.classList.remove("hide");
+      handler(searchInput);
+    });
+  };
+
   const addHandlerSearch = function (handler) {
-    parentEl.addEventListener("submit", function (e) {
+    formEl.addEventListener("submit", function (e) {
       e.preventDefault();
       const query = inputEl.value;
       if (query === "") return inputEl.focus();
@@ -82,9 +76,10 @@ function searchView() {
       handler(query);
     });
   };
-  // Public variables
+  // Public API
   const publicApi = {
     renderList,
+    addHandlerInput,
     addHandlerSearch,
   };
   return publicApi;

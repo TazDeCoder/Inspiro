@@ -71,28 +71,34 @@ export default function buildCalendarView() {
     (headerEl.textContent = `${month}, ${year}`);
   // Add event handlers
   const addHandlerToggle = function (handler) {
-    tableEl.addEventListener("click", function (e) {
-      const clicked = e.target.closest(".data__item-dot");
-      if (!clicked) return;
-      clicked.classList.toggle("data__item--active");
-      const cell = clicked.closest(".row-data");
-      const cellDate = cell.getAttribute("data-date");
-      const removeDate = clicked.classList.contains("data__item--active")
-        ? false
-        : true;
-      console.log(cellDate);
-      handler(cellDate, removeDate);
-    });
+    if (tableEl.getAttribute("data-event-click") !== "true") {
+      tableEl.setAttribute("data-event-click", "true");
+      tableEl.addEventListener("click", function (e) {
+        const clicked = e.target.closest(".data__item-dot");
+        if (!clicked) return;
+        clicked.classList.toggle("data__item--active");
+        const cell = clicked.closest(".row-data");
+        const cellDate = cell.getAttribute("data-date");
+        const removeDate = clicked.classList.contains("data__item--active")
+          ? false
+          : true;
+        handler(cellDate, removeDate);
+      });
+    }
   };
+
   const addHandlerClick = function (handler) {
-    navEl.addEventListener("click", function (e) {
-      let reverse = false;
-      const clicked = e.target.closest(".nav__btn");
-      if (!clicked) return;
-      if (clicked.classList.contains("nav__btn--prev")) reverse = true;
-      const goToMonth = +clicked.getAttribute("data-goto");
-      handler(goToMonth, reverse);
-    });
+    if (navEl.getAttribute("data-event-click") !== "true") {
+      navEl.setAttribute("data-event-click", "true");
+      navEl.addEventListener("click", function (e) {
+        let reverse = false;
+        const clicked = e.target.closest(".nav__btn");
+        if (!clicked) return;
+        if (clicked.classList.contains("nav__btn--prev")) reverse = true;
+        const goToMonth = +clicked.getAttribute("data-goto");
+        handler(goToMonth, reverse);
+      });
+    }
   };
   // Public API
   const publicApi = {
