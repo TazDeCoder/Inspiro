@@ -4,7 +4,7 @@ import _ from "lodash";
 import Quotesy from "quotesy/lib/index.js";
 
 import { getJSON } from "./helpers.js";
-import { API_URL, API_URL_QUOTE } from "./config.js";
+import { API_URL } from "./config.js";
 
 const nameMonths = new Map([
   [0, "JAN"],
@@ -31,6 +31,7 @@ export const state = {
     pageContents: [],
     pageText: [],
     list: [],
+    suggestions: [],
   },
   calendar: {
     markedDays: [],
@@ -51,21 +52,128 @@ export const state = {
 };
 
 ////////////////////////////////////////////////
+////// Search Functionalities
+///////////////////////////////////////////////
+
+export function loadSearchList(currentSearch) {
+  if (_.isEmpty(state.search.list)) {
+    const authorSet = new Set(
+      Quotesy.parse_json().map((quote) => quote.author)
+    );
+    state.search.list = Array.from(authorSet);
+  }
+  state.search.suggestions = state.search.list.filter((suggestion) =>
+    suggestion.toLocaleLowerCase().startsWith(currentSearch.toLocaleLowerCase())
+  );
+}
+
+export async function getSearchResult(query) {
+  state.search.query = query;
+  const searchParams = new URLSearchParams({
+    origin: "*",
+    action: "query",
+    prop: "extracts|pageimages",
+    piprop: "original",
+    titles: query.toLowerCase(),
+    redirects: true,
+    converttitles: true,
+    format: "json",
+  });
+  const url = `${API_URL}?${searchParams}`;
+  const data = await getJSON(url);
+  const { pages } = data.query;
+  const [page] = Object.values(pages);
+  if (page?.missing === "") return (state.search.query = "");
+  state.search.title = page.title;
+  state.search.imageSrc = page.original?.source ?? "";
+  // Parse data
+  const parser = new DOMParser();
+  const htmlDOM = parser.parseFromString(page.extract, "text/html");
+  const bodyDOM = htmlDOM.body;
+  state.search.pageContents = [...bodyDOM.children].filter(
+    (el) => el.nodeName === "H2"
+  );
+  state.search.pageText = [...bodyDOM.children].map((el) => el.outerHTML);
+}
+
+////////////////////////////////////////////////
+////// Article Functionalities
+///////////////////////////////////////////////
+
+function persistModelBookmarks() {
+  localStorage.setItem(
+    "modelBookmarks",
+    JSON.stringify(state.bookmarks.models)
+  );
+}
+
+export function addModelBookmark(newModel) {
+  const foundDuplicate = _.findIndex(state.bookmarks.models, newModel);
+  if (foundDuplicate === -1) state.bookmarks.models.push(newModel);
+  else state.bookmarks.models.splice(foundDuplicate, 1);
+  persistModelBookmarks();
+}
+
+export function restoreModelBookmarks() {
+  const storage = localStorage.getItem("modelBookmarks");
+  if (storage) state.bookmarks.models = JSON.parse(storage);
+}
+
+////////////////////////////////////////////////
 ////// Target Functionalities
 ///////////////////////////////////////////////
 
-const createTargetQuota = ({ quota, checked = false }) => ({
+// Local Storage
+function persistTargets() {
+  localStorage.setItem("targets", JSON.stringify(state.targets));
+}
+
+const createTargetQuota = ({
+  id = String(Date.now()).slice(10),
+  quota,
+  checked = false,
+}) => ({
+  id,
   quota,
   checked,
-  setChecked(checked) {
-    this.checked = checked;
+  toggleChecked() {
+    this.checked = !checked;
     return this;
   },
 });
 
 export function addTargetQuota(newTargetQuota) {
+  if (!newTargetQuota) return;
   const object = createTargetQuota({ quota: newTargetQuota });
   state.targets.push(object);
+  persistTargets();
+}
+
+export function updateTargetQuotas(id, remove) {
+  if (remove) {
+    state.targets = [];
+    localStorage.removeItem("targets");
+  } else {
+    const targetQuota = _.find(
+      state.targets,
+      (targetQuota) => targetQuota.id === id
+    );
+    targetQuota.toggleChecked();
+    persistTargets();
+  }
+}
+
+export function restoreTargets() {
+  const storage = localStorage.getItem("targets");
+  if (!storage) return;
+  const targets = JSON.parse(storage);
+  for (const target of targets) {
+    const object = createTargetQuota({
+      quota: target.quota,
+      checked: target.checked,
+    });
+    state.targets.push(object);
+  }
 }
 
 ////////////////////////////////////////////////
@@ -140,67 +248,27 @@ export function restoreMarkedDays() {
 ////// Quote Functionalities
 ///////////////////////////////////////////////
 
+// Local Storage
+function persistQuoteBookmarks() {
+  localStorage.setItem(
+    "quoteBookmarks",
+    JSON.stringify(state.bookmarks.quotes)
+  );
+}
+
 export async function loadQuote() {
   if (!_.isEmpty(state.quote)) return;
   state.quote = Quotesy.random();
 }
 
-////////////////////////////////////////////////
-////// Search Functionalities
-///////////////////////////////////////////////
-
-export function loadSearchList() {
-  const authors = new Set(Quotesy.parse_json().map((quote) => quote.author));
-  state.search.list = Array.from(authors);
+export function addQuoteBookmark(newQuote) {
+  const foundDuplicate = _.findIndex(state.bookmarks.quotes, newQuote);
+  if (foundDuplicate === -1) state.bookmarks.quotes.push(newQuote);
+  else state.bookmarks.quotes.splice(foundDuplicate, 1);
+  persistQuoteBookmarks();
 }
 
-export async function getSearchResult(query) {
-  if (!query) return;
-  const searchParams = new URLSearchParams({
-    origin: "*",
-    action: "query",
-    prop: "extracts|pageimages",
-    piprop: "original",
-    titles: query.toLowerCase(),
-    redirects: true,
-    converttitles: true,
-    format: "json",
-  });
-  const url = `${API_URL}?${searchParams}`;
-  const data = await getJSON(url);
-  const { pages } = data.query;
-  const [page] = Object.values(pages);
-  state.search.title = page.title;
-  state.search.imageSrc = page.original?.source ?? "";
-  // Parse data
-  const parser = new DOMParser();
-  const htmlDOM = parser.parseFromString(page.extract, "text/html");
-  const bodyDOM = htmlDOM.body;
-  state.search.pageContents = [...bodyDOM.children].filter(
-    (el) => el.nodeName === "H2"
-  );
-  state.search.pageText = [...bodyDOM.children].map((el) => el.outerHTML);
-  state.search.query = query;
-}
-
-////////////////////////////////////////////////
-////// Bookmark Functionalities
-///////////////////////////////////////////////
-
-function persistModelBookmarks() {
-  localStorage.setItem(
-    "modelBookmarks",
-    JSON.stringify(state.bookmarks.models)
-  );
-}
-
-export function addModelBookmark(model) {
-  const modelObj = { name: model };
-  state.bookmarks.models.push(modelObj);
-  persistModelBookmarks();
-}
-
-export function restoreModelBookmarks() {
-  const storage = localStorage.getItem("modelBookmarks");
-  if (storage) state.bookmarks.models = JSON.parse(storage);
+export function restoreQuoteBookmarks() {
+  const storage = localStorage.getItem("quoteBookmarks");
+  if (storage) state.bookmarks.quotes = JSON.parse(storage);
 }
