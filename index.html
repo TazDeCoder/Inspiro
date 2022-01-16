@@ -28,18 +28,17 @@
     <header class="head--top">
       <div class="head__content">
         <!-- Search query form  -->
-        <form class="content__form--search">
-          <div class="form__container-search">
-            <i class="form__icon--search gg-search"></i>
+        <div class="content__wrapper--search">
+          <form class="wrapper__form-search">
             <input
               class="form__input--field"
               type="text"
               placeholder="Search for a person"
             />
-          </div>
-
-          <ul class="form__list--autofill"></ul>
-        </form>
+            <i class="form__icon--search gg-search"></i>
+            <ul class="form__list--autofill"></ul>
+          </form>
+        </div>
         <!-- Toggle menu -->
         <nav class="content__nav--menu">
           <!-- Menu button -->
@@ -49,7 +48,7 @@
           <!-- Links to different views -->
           <ul class="content__nav-tabs hidden">
             <li class="tabs__item">
-              <a class="item-link item-link--home" href="/">Home</a>
+              <a class="item-link item-link--home" href="/homepage">Home</a>
             </li>
             <!-- Quotes -->
             <li class="tabs__item">
@@ -58,10 +57,6 @@
             <!-- Role models -->
             <li class="tabs__item">
               <a class="item-link item-link--models" href="/models">Models</a>
-            </li>
-            <!-- SMART Goals -->
-            <li class="tabs__item">
-              <a class="item-link item-link--goals" href="/goals">Goals</a>
             </li>
           </ul>
         </nav>
@@ -72,13 +67,5 @@
       <!-- Page that displays the different views -->
       <div class="main__content"></div>
     </main>
-    <!-- Modal -->
-    <div class="modal hidden">
-      <button class="modal__btn modal__btn--close">&times;</button>
-      <h1 class="modal__header"></h1>
-      <!-- Insert form here -->
-    </div>
-    <!-- Overlay for modal -->
-    <div class="overlay hidden"></div>
   </body>
 </html>
