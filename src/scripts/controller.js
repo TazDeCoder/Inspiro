@@ -1,5 +1,8 @@
 "use strict";
 
+import "core-js/stable";
+import "regenerator-runtime";
+
 import * as model from "./model.js";
 import sources from "./sources.js";
 // Views
