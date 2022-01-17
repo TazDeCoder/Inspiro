@@ -1,0 +1,32 @@
+{
+  "name": "inspiro",
+  "version": "1.0.0",
+  "description": "",
+  "default": "index.html",
+  "scripts": {
+    "start": "parcel index.html",
+    "build": "parcel build index.html --dist-dir ./dist"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/tarwat-uddin/Inspiro.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/tarwat-uddin/Inspiro/issues"
+  },
+  "homepage": "https://github.com/tarwat-uddin/Inspiro#readme",
+  "dependencies": {
+    "core-js": "^3.20.3",
+    "handlebars": "^4.7.7",
+    "lodash": "^4.17.21",
+    "quotesy": "^1.0.5",
+    "regenerator-runtime": "^0.13.9"
+  },
+  "devDependencies": {
+    "parcel": "^2.2.0",
+    "parcel-reporter-static-files-copy": "^1.3.4"
+  }
+}
