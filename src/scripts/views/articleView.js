@@ -6,7 +6,7 @@ import _ from "lodash";
 import sources from "../sources.js";
 
 export default function buildArticleView() {
-  let iconEl, listEl, bookmarkTitle;
+  let iconEl, listEl, bookmarkTitle, bookmarkImageSrc;
   // Creating base parent
   const base = document.createElement("div");
   // Private methods

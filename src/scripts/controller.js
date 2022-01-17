@@ -33,21 +33,19 @@ function route(evt = window.event) {
 
 function handleLocation(redirect = false) {
   // Get current url pathname
-  const pathName = redirect ? "/homepage" : window.location.pathname;
+  const pathName = redirect ? "/dashboard" : window.location.pathname;
   // Now generate the HTML template markup in placeholder
   contentMain.innerHTML = "";
   // Render pathname view
   switch (pathName) {
-    case "/home":
-      return controlHome();
+    case "/dashboard":
+      return controlDashboard();
     case "/article":
       return controlArticle();
     case "/quotes":
       return controlQuotes();
     case "/models":
       return controlModels();
-    default:
-      return controlHome();
   }
 }
 
@@ -58,7 +56,6 @@ function controlMenu(event) {
 async function controlArticle() {
   contentMain.insertAdjacentHTML("beforeend", sources.spinner());
   await model.getSearchResult(model.state.search.query);
-  console.log(model.state.search.query);
   if (!model.state.search.query) {
     articleView.renderError();
   } else {
@@ -96,7 +93,7 @@ function controlSearchSuggestions(currentSearch) {
   searchView.renderList(model.state.search);
 }
 
-async function controlHome() {
+async function controlDashboard() {
   contentMain.classList.add("content--flex");
   // Target
   targetView.renderHead();
