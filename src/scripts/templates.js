@@ -1,18 +1,18 @@
 "use strict";
 
 export default {
-  spinner: spinnerSource,
-  searchList: searchListSource,
-  article: articleSource,
-  quota: quotaSource,
-  calander: calendarSource,
-  calanderPagination: calendarPaginationSource,
-  quote: quoteSource,
-  bookmarkQuote: bookmarkQuoteSource,
-  bookmarkModel: bookmarkModelSource,
+  spinner: spinnerTemplate,
+  searchList: searchListTemplate,
+  article: articleTemplate,
+  quota: quotaTemplate,
+  calendar: calendarTemplate,
+  calendarPagination: calendarPaginationTemplate,
+  quote: quoteTemplate,
+  quoteBookmark: quoteBookmarkTemplate,
+  modelBookmark: modelBookmarkTemplate,
 };
 
-function spinnerSource() {
+function spinnerTemplate() {
   return `
     <div class="lds-roller">
       <div></div>
@@ -27,21 +27,19 @@ function spinnerSource() {
   `;
 }
 
-function searchListSource() {
+function searchListTemplate() {
   return `
     {{searchListMarkup suggestions}}
   `;
 }
 
-function quotaSource() {
+function quotaTemplate() {
   return `
-    <ul class="content__container-list">
-      {{targetData targets}}
-    </ul>
+    {{targetData targets}}
   `;
 }
 
-function quoteSource() {
+function quoteTemplate() {
   return `
     <i
     class="content__container-icon--bookmark gg-bookmark"
@@ -54,7 +52,7 @@ function quoteSource() {
   `;
 }
 
-function articleSource() {
+function articleTemplate() {
   return `
     <header class="content__head">
       <h1 class="head__header">{{title}}</h1>
@@ -86,7 +84,7 @@ function articleSource() {
   `;
 }
 
-function calendarSource() {
+function calendarTemplate() {
   return `
     <thead>
       <tr>
@@ -102,7 +100,7 @@ function calendarSource() {
   `;
 }
 
-function calendarPaginationSource() {
+function calendarPaginationTemplate() {
   return `
     <button class="nav__btn nav__btn--prev btn" data-goto="{{prevMonth}}"">
       Previous
@@ -114,7 +112,7 @@ function calendarPaginationSource() {
   `;
 }
 
-function bookmarkQuoteSource() {
+function quoteBookmarkTemplate() {
   return `
     <header class="content__head">
       <h1 class="head__header">Bookmarks</h1>
@@ -122,13 +120,13 @@ function bookmarkQuoteSource() {
 
     <div class="content__container--hero">
       <ul class="container__list--bookmarks">
-        {{bookmarkQuoteMarkup bookmarks}}
+        {{quoteBookmarkMarkup bookmarks}}
       </ul>
     </div>
   `;
 }
 
-function bookmarkModelSource() {
+function modelBookmarkTemplate() {
   return `
     <header class="content__head">
       <h1 class="head__header">Bookmarks</h1>
@@ -136,7 +134,7 @@ function bookmarkModelSource() {
 
     <div class="content__container--hero">
       <ul class="container__list--bookmarks">
-        {{bookmarkModelMarkup bookmarks}}
+        {{modelBookmarkMarkup bookmarks}}
       </ul>
     </div>
   `;

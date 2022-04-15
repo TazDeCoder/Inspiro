@@ -3,7 +3,17 @@
 import Handlebars from "handlebars/dist/handlebars.js";
 import _ from "lodash";
 
-export default function buildTargetView() {
+import templates from "../templates.js";
+
+function generateTargetQuotaMarkup({ targets }) {
+  const targetQuotaData = {
+    targets,
+  };
+  const template = Handlebars.compile(templates.quota());
+  return template(targetQuotaData);
+}
+
+function buildTargetView() {
   let formEl, inputEl;
   // Create base parent
   const base = document.createElement("div");
@@ -18,24 +28,16 @@ export default function buildTargetView() {
   base.appendChild(headEl);
   base.appendChild(listEl);
   // Private methods
-  const generateTargetQuotaMarkup = function ({ targets }) {
-    const targetQuotaData = {
-      targets,
-    };
-    const template = Handlebars.compile("{{targetData targets}}");
-    return template(targetQuotaData);
-  };
-
   const clearList = () => (listEl.innerHTML = "");
   // Add event listeners
-  headEl.addEventListener("click", function (e) {
+  headEl.addEventListener("click", (e) => {
     const clicked = e.target.closest(".gg-add");
     if (!clicked) return;
     formEl = document.querySelector(".head__form--inline");
     formEl.classList.toggle("head__form--display");
   });
   // Public methods
-  const renderHead = function () {
+  const renderHead = () => {
     headEl.innerHTML = `
       <header class="content__container-head">
         <h1 class="head__header">Weekly Targets</h1>  
@@ -56,21 +58,20 @@ export default function buildTargetView() {
     `;
     formEl = headEl.querySelector(".head__form--inline");
   };
-
-  const renderList = function (data) {
+  const renderList = (data) => {
     if (!_.isObject(data)) return;
     const markup = generateTargetQuotaMarkup(data);
     clearList();
     listEl.insertAdjacentHTML("afterbegin", markup);
   };
-  // Add event handlers
-  const addHandlerSubmit = function (handler) {
+  // Add handler functions
+  const addHandlerSubmit = (handler) => {
     if (
       formEl.getAttribute("data-event-submit") !== "true" &&
       formEl.getAttribute("data-event-click") !== "true"
     ) {
       formEl.setAttribute("data-event-submit", "true");
-      formEl.addEventListener("submit", function (e) {
+      formEl.addEventListener("submit", (e) => {
         e.preventDefault();
         inputEl = document.querySelector(".form__input--quota");
         const quota = inputEl.value;
@@ -80,7 +81,7 @@ export default function buildTargetView() {
       });
 
       formEl.setAttribute("data-event-submit", "true");
-      formEl.addEventListener("click", function (e) {
+      formEl.addEventListener("click", (e) => {
         e.preventDefault();
         inputEl = document.querySelector(".form__input--quota");
         const clicked = e.target.closest(".gg-enter");
@@ -92,10 +93,9 @@ export default function buildTargetView() {
       });
     }
   };
-
-  const addHandlerToggle = function (handler) {
+  const addHandlerToggle = (handler) => {
     if (listEl.getAttribute("data-event-toggle") !== "true") {
-      listEl.addEventListener("click", function (e) {
+      listEl.addEventListener("click", (e) => {
         const elementClicked = e.target;
         elementClicked.setAttribute("data-event-toggle", "true");
         const clicked = e.target.closest(".item__input");
@@ -117,3 +117,5 @@ export default function buildTargetView() {
   };
   return publicApi;
 }
+
+export default buildTargetView;

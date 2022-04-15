@@ -16,7 +16,7 @@ export async function getJSON(url) {
 ////// Handlerbars Custom Helpers
 ///////////////////////////////////////////////
 
-Handlebars.registerHelper("columnData", function (pageContents) {
+Handlebars.registerHelper("columnData", (pageContents) => {
   let contents = [];
   const ignoreContents = [
     "References",
@@ -53,7 +53,7 @@ Handlebars.registerHelper("columnData", function (pageContents) {
   return new Handlebars.SafeString(markup);
 });
 
-Handlebars.registerHelper("searchListMarkup", function (suggestions) {
+Handlebars.registerHelper("searchListMarkup", (suggestions) => {
   const listLimit = 10;
   const filteredSuggestions = _.slice(suggestions, 0, listLimit);
   const markup = filteredSuggestions
@@ -62,13 +62,13 @@ Handlebars.registerHelper("searchListMarkup", function (suggestions) {
   return new Handlebars.SafeString(markup);
 });
 
-Handlebars.registerHelper("articleData", function (pageText) {
+Handlebars.registerHelper("articleData", (pageText) => {
   const markup = pageText.join("");
   return new Handlebars.SafeString(markup);
 });
 
-Handlebars.registerHelper("targetData", function (targets) {
-  const convertTitleCase = function (title) {
+Handlebars.registerHelper("targetData", (targets) => {
+  const convertTitleCase = (title) => {
     const exceptions = [
       "a",
       "an",
@@ -113,7 +113,7 @@ Handlebars.registerHelper("targetData", function (targets) {
 
 Handlebars.registerHelper(
   "tableData",
-  function (markedDays, firstDayIndex, prevLastDay, lastDay, currMonth, today) {
+  (markedDays, firstDayIndex, prevLastDay, lastDay, currMonth, today) => {
     let currDay = 1;
     let tableRows = [];
     let calendarOffDays = false;
@@ -183,7 +183,7 @@ Handlebars.registerHelper(
   }
 );
 
-Handlebars.registerHelper("bookmarkModelMarkup", function (bookmarks) {
+Handlebars.registerHelper("modelBookmarkMarkup", (bookmarks) => {
   let modelItems = [];
   for (const bookmark of bookmarks) {
     const li = document.createElement("li");
@@ -207,7 +207,7 @@ Handlebars.registerHelper("bookmarkModelMarkup", function (bookmarks) {
   return new Handlebars.SafeString(markup);
 });
 
-Handlebars.registerHelper("bookmarkQuoteMarkup", function (bookmarks) {
+Handlebars.registerHelper("quoteBookmarkMarkup", (bookmarks) => {
   let groupedAuthors = [];
   const authorSet = new Set(bookmarks.map((quote) => quote.author));
   const groupedBookmarks = Array.from(authorSet);

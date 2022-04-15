@@ -3,7 +3,7 @@
 import _ from "lodash";
 import Quotesy from "quotesy/lib/index.js";
 
-import { getJSON } from "./helpers.js";
+import { getJSON } from "./utils.js";
 import { API_URL } from "./config.js";
 
 const nameMonths = new Map([
@@ -100,6 +100,7 @@ export async function getSearchResult(query) {
 ////// Article Functionalities
 ///////////////////////////////////////////////
 
+// Local Storage
 function persistModelBookmarks() {
   localStorage.setItem(
     "modelBookmarks",
@@ -182,7 +183,6 @@ export function restoreTargets() {
 
 // Helper functions
 const getFirstDayIndex = (year, month) => new Date(year, month).getDay();
-
 const getLastDay = (year, month) => new Date(year, month, 0).getDate();
 
 // Local Storage

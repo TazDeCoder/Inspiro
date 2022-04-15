@@ -3,29 +3,25 @@
 import Handlebars from "handlebars/dist/handlebars.js";
 import _ from "lodash";
 
-import sources from "../sources.js";
+import templates from "../templates.js";
 
-export default function buildArticleView() {
-  let iconEl, listEl, bookmarkTitle, bookmarkImageSrc;
-  // Creating base parent
+let bookmarkTitle, bookmarkImageSrc;
+
+function generateArticleMarkup({ title, imageSrc, pageContents, pageText }) {
+  const articleInput = { title, imageSrc, pageContents, pageText };
+  [bookmarkTitle, bookmarkImageSrc] = [title, imageSrc];
+  const template = Handlebars.compile(templates.article());
+  return template(articleInput);
+}
+
+function buildArticleView() {
+  let iconEl, listEl;
+  // Create base parent
   const base = document.createElement("div");
   // Private methods
-  const generateArticleMarkup = ({
-    title,
-    imageSrc,
-    pageContents,
-    pageText,
-  }) => {
-    bookmarkTitle = title;
-    bookmarkImageSrc = imageSrc;
-    const articleInput = { title, imageSrc, pageContents, pageText };
-    const template = Handlebars.compile(sources.article());
-    return template(articleInput);
-  };
-
   const clear = () => (base.innerHTML = "");
-  // Add event handler
-  const handleClick = function (e) {
+  // Add event handlers
+  const handleClick = (e) => {
     e.preventDefault();
     const clicked = e.target.closest(".list__item-link");
     if (!clicked) return;
@@ -33,7 +29,7 @@ export default function buildArticleView() {
     document.getElementById(hash).scrollIntoView({ behavior: "smooth" });
   };
   // Public methods
-  const render = function (data) {
+  const render = (data) => {
     if (!_.isObject(data)) return;
     const articleMarkup = generateArticleMarkup(data);
     clear();
@@ -42,8 +38,7 @@ export default function buildArticleView() {
     listEl = base.querySelector(".head__list");
     listEl.addEventListener("click", handleClick);
   };
-
-  const renderError = function () {
+  const renderError = () => {
     const markup = `
       <p class="error__label">
         Page couldn't be found, or is missing
@@ -51,12 +46,11 @@ export default function buildArticleView() {
     `;
     base.innerHTML = markup;
   };
-
-  // Add event handler
-  const addHandlerToggle = function (handler) {
+  // Add handler functions
+  const addHandlerToggle = (handler) => {
     if (iconEl.getAttribute("data-event-click") !== "true") {
       iconEl.setAttribute("data-event-click", "true");
-      iconEl.addEventListener("click", function () {
+      iconEl.addEventListener("click", () => {
         iconEl.classList.toggle("bookmark--active");
         const data = {
           name: bookmarkTitle,
@@ -75,3 +69,5 @@ export default function buildArticleView() {
   };
   return publicApi;
 }
+
+export default buildArticleView;

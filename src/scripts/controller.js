@@ -4,7 +4,7 @@ import "core-js/stable";
 import "regenerator-runtime";
 
 import * as model from "./model.js";
-import sources from "./sources.js";
+import templates from "./templates.js";
 // Views
 import menuView from "./views/menuView.js";
 import searchView from "./views/searchView.js";
@@ -13,17 +13,21 @@ import buildArticleView from "./views/articleView.js";
 import buildTargetView from "./views/targetView.js";
 import buildCalendarView from "./views/calendarView.js";
 import buildQuoteView from "./views/quoteView.js";
-import buildBookmarkModelView from "./views/bookmarkModelView.js";
-import buildBookmarkQuoteView from "./views/bookmarkQuoteView.js";
+import buildModelBookmarkView from "./views/modelBookmarkView.js";
+import buildQuoteBookmarkView from "./views/quoteBookmarkView.js";
 
 const contentMain = document.querySelector(".main__content");
-// Create views
+// Build app views
 const articleView = buildArticleView();
 const targetView = buildTargetView();
 const calendarView = buildCalendarView();
 const quoteView = buildQuoteView();
-const bookmarkQuoteView = buildBookmarkQuoteView();
-const bookmarkModelView = buildBookmarkModelView();
+const quoteBookmarkView = buildQuoteBookmarkView();
+const modelBookmarkView = buildModelBookmarkView();
+
+////////////////////////////////////////////////
+////// Routing + Initialise App
+///////////////////////////////////////////////
 
 function route(evt = window.event) {
   evt.preventDefault();
@@ -49,12 +53,36 @@ function handleLocation(redirect = false) {
   }
 }
 
+function init() {
+  // Load calendar
+  model.loadCalendar();
+  // Add event handlers
+  menuView.addHandlerClick(controlMenu);
+  searchView.addHandlerInput(controlSearchSuggestions);
+  searchView.addHandlerSearch(controlSearch);
+  // Add event listeners
+  window.addEventListener("popstate", handleLocation);
+  // Restore local storage data
+  model.restoreTargets();
+  model.restoreMarkedDays();
+  model.restoreModelBookmarks();
+  model.restoreQuoteBookmarks();
+  // Redirect to homepage
+  handleLocation(true);
+}
+
+init();
+
+////////////////////////////////////////////////
+////// Control Functionalities
+///////////////////////////////////////////////
+
 function controlMenu(event) {
   route(event);
 }
 
 async function controlArticle() {
-  contentMain.insertAdjacentHTML("beforeend", sources.spinner());
+  contentMain.insertAdjacentHTML("beforeend", templates.spinner());
   await model.getSearchResult(model.state.search.query);
   if (!model.state.search.query) {
     articleView.renderError();
@@ -68,12 +96,12 @@ async function controlArticle() {
 }
 
 function controlModels() {
-  contentMain.insertAdjacentHTML("beforeend", sources.spinner());
-  bookmarkModelView.render(model.state.bookmarks);
-  bookmarkModelView.addHandlerClick(controlSearch);
+  contentMain.insertAdjacentHTML("beforeend", templates.spinner());
+  modelBookmarkView.render(model.state.bookmarks);
+  modelBookmarkView.addHandlerClick(controlSearch);
   contentMain.innerHTML = "";
   contentMain.classList.remove("content--flex");
-  contentMain.insertAdjacentElement("beforeend", bookmarkModelView.base);
+  contentMain.insertAdjacentElement("beforeend", modelBookmarkView.base);
 }
 
 function controlBookmarkArticle(newModel) {
@@ -87,9 +115,7 @@ async function controlSearch(query) {
 }
 
 function controlSearchSuggestions(currentSearch) {
-  // Load search list
   model.loadSearchList(currentSearch);
-  // Render search list into view
   searchView.renderList(model.state.search);
 }
 
@@ -144,33 +170,13 @@ function controlCalendarPagination(setMonth, reverse) {
 }
 
 function controlQuotes() {
-  contentMain.insertAdjacentHTML("beforeend", sources.spinner());
-  bookmarkQuoteView.render(model.state.bookmarks);
+  contentMain.insertAdjacentHTML("beforeend", templates.spinner());
+  quoteBookmarkView.render(model.state.bookmarks);
   contentMain.innerHTML = "";
   contentMain.classList.remove("content--flex");
-  contentMain.insertAdjacentElement("beforeend", bookmarkQuoteView.base);
+  contentMain.insertAdjacentElement("beforeend", quoteBookmarkView.base);
 }
 
 function controlBookmarkQuote(newQuote) {
   model.addQuoteBookmark(newQuote);
 }
-
-function init() {
-  // Load calendar
-  model.loadCalendar();
-  // Add event handlers
-  menuView.addHandlerClick(controlMenu);
-  searchView.addHandlerInput(controlSearchSuggestions);
-  searchView.addHandlerSearch(controlSearch);
-  // Add event listeners
-  window.addEventListener("popstate", handleLocation);
-  // Restore local storage data
-  model.restoreTargets();
-  model.restoreMarkedDays();
-  model.restoreModelBookmarks();
-  model.restoreQuoteBookmarks();
-  // Redirect to homepage
-  handleLocation(true);
-}
-
-init();

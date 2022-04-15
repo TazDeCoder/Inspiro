@@ -3,9 +3,41 @@
 import Handlebars from "handlebars/dist/handlebars.js";
 import _ from "lodash";
 
-import sources from "../sources.js";
+import templates from "../templates.js";
 
-export default function buildCalendarView() {
+function generateCalendarMarkup({
+  markedDays,
+  firstDayIndex,
+  prevLastDay,
+  lastDay,
+  month,
+  formatDate,
+}) {
+  const calendarData = {
+    days: ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"],
+    markedDays,
+    firstDayIndex,
+    prevLastDay,
+    lastDay,
+    currMonth: month,
+    today: formatDate,
+  };
+  const template = Handlebars.compile(templates.calendar());
+  return template(calendarData);
+}
+
+function generateNavMarkup({ month }) {
+  const prevMonth = month === 0 ? 11 : month - 1;
+  const nextMonth = month === 11 ? 0 : month + 1;
+  const navInput = {
+    prevMonth,
+    nextMonth,
+  };
+  const template = Handlebars.compile(templates.calendarPagination());
+  return template(navInput);
+}
+
+function buildCalendarView() {
   // Create base parent
   const base = document.createElement("div");
   base.classList.add("content__wrapper--hero");
@@ -22,46 +54,13 @@ export default function buildCalendarView() {
   base.appendChild(headerEl);
   base.appendChild(tableEl);
   base.appendChild(navEl);
-  // Private methods
-  const generateCalanderMarkup = ({
-    markedDays,
-    firstDayIndex,
-    prevLastDay,
-    lastDay,
-    month,
-    formatDate,
-  }) => {
-    const calendarData = {
-      days: ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"],
-      markedDays,
-      firstDayIndex,
-      prevLastDay,
-      lastDay,
-      currMonth: month,
-      today: formatDate,
-    };
-    const template = Handlebars.compile(sources.calander());
-    return template(calendarData);
-  };
-
-  const generateNavMarkup = ({ month }) => {
-    const prevMonth = month === 0 ? 11 : month - 1;
-    const nextMonth = month === 11 ? 0 : month + 1;
-    const navInput = {
-      prevMonth,
-      nextMonth,
-    };
-    const template = Handlebars.compile(sources.calanderPagination());
-    return template(navInput);
-  };
   // Public methods
-  const renderTable = function (data) {
+  const renderTable = (data) => {
     if (!_.isObject(data)) return;
-    const tableMarkup = generateCalanderMarkup(data);
+    const tableMarkup = generateCalendarMarkup(data);
     tableEl.innerHTML = tableMarkup;
   };
-
-  const renderNav = function (data) {
+  const renderNav = (data) => {
     if (!_.isObject(data)) return;
     const navMarkup = generateNavMarkup(data);
     navEl.innerHTML = navMarkup;
@@ -69,11 +68,11 @@ export default function buildCalendarView() {
   // Updates calendar header
   const updateHeader = (month, year) =>
     (headerEl.textContent = `${month}, ${year}`);
-  // Add event handlers
-  const addHandlerToggle = function (handler) {
+  // Add handler functions
+  const addHandlerToggle = (handler) => {
     if (tableEl.getAttribute("data-event-click") !== "true") {
       tableEl.setAttribute("data-event-click", "true");
-      tableEl.addEventListener("click", function (e) {
+      tableEl.addEventListener("click", (e) => {
         const clicked = e.target.closest(".data__item-dot");
         if (!clicked) return;
         clicked.classList.toggle("data__item--active");
@@ -86,11 +85,10 @@ export default function buildCalendarView() {
       });
     }
   };
-
-  const addHandlerClick = function (handler) {
+  const addHandlerClick = (handler) => {
     if (navEl.getAttribute("data-event-click") !== "true") {
       navEl.setAttribute("data-event-click", "true");
-      navEl.addEventListener("click", function (e) {
+      navEl.addEventListener("click", (e) => {
         let reverse = false;
         const clicked = e.target.closest(".nav__btn");
         if (!clicked) return;
@@ -111,3 +109,5 @@ export default function buildCalendarView() {
   };
   return publicApi;
 }
+
+export default buildCalendarView;

@@ -3,10 +3,18 @@
 import Handlebars from "handlebars/dist/handlebars.js";
 import _ from "lodash";
 
-import sources from "../sources.js";
+import templates from "../templates.js";
 
-export default function buildQuoteView() {
-  let bookmarkText, bookmarkAuthor;
+let bookmarkText, bookmarkAuthor;
+
+function generateQuoteMarkup({ text, author }) {
+  const quoteInput = { text, author };
+  [bookmarkText, bookmarkAuthor] = [text, author];
+  const template = Handlebars.compile(templates.quote());
+  return template(quoteInput);
+}
+
+function buildQuoteView() {
   // Create base parent
   const base = document.createElement("div");
   base.classList.add("content__container--top");
@@ -20,29 +28,24 @@ export default function buildQuoteView() {
   // Create author label
   const authorLbl = document.createElement("p");
   authorLbl.classList.add("container__label", "container__label--author");
-  // Append children to base parent
+  // Add children to base parent
   base.appendChild(iconEl);
   base.appendChild(quoteLbl);
   base.appendChild(authorLbl);
   // Private methods
-  const generateQuoteMarkup = ({ text, author }) => {
-    const quoteInput = { text, author };
-    [bookmarkText, bookmarkAuthor] = [text, author];
-    const template = Handlebars.compile(sources.quote());
-    return template(quoteInput);
-  };
   const clear = () => (base.innerHTML = "");
   // Public methods
-  const render = function (data) {
+  const render = (data) => {
     if (!_.isObject(data)) return;
     const quoteMarkup = generateQuoteMarkup(data);
     clear();
     base.innerHTML = quoteMarkup;
   };
-  const addHandlerToggle = function (handler) {
+  // Add handler functions
+  const addHandlerToggle = (handler) => {
     if (base.getAttribute("data-event-click") !== "true") {
       base.setAttribute("data-event-click", "true");
-      base.addEventListener("click", function (e) {
+      base.addEventListener("click", (e) => {
         const clicked = e.target.closest(".gg-bookmark");
         if (!clicked) return;
         clicked.classList.toggle("bookmark--active");
@@ -62,3 +65,5 @@ export default function buildQuoteView() {
   };
   return publicApi;
 }
+
+export default buildQuoteView;
