@@ -1,17 +1,5 @@
 "use strict";
 
-export default {
-  spinner: spinnerTemplate,
-  searchList: searchListTemplate,
-  article: articleTemplate,
-  quota: quotaTemplate,
-  calendar: calendarTemplate,
-  calendarPagination: calendarPaginationTemplate,
-  quote: quoteTemplate,
-  quoteBookmark: quoteBookmarkTemplate,
-  modelBookmark: modelBookmarkTemplate,
-};
-
 function spinnerTemplate() {
   return `
     <div class="lds-roller">
@@ -139,3 +127,15 @@ function modelBookmarkTemplate() {
     </div>
   `;
 }
+
+export default {
+  spinner: spinnerTemplate,
+  searchList: searchListTemplate,
+  article: articleTemplate,
+  quota: quotaTemplate,
+  calendar: calendarTemplate,
+  calendarPagination: calendarPaginationTemplate,
+  quote: quoteTemplate,
+  quoteBookmark: quoteBookmarkTemplate,
+  modelBookmark: modelBookmarkTemplate,
+};

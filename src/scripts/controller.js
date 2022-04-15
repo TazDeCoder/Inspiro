@@ -3,18 +3,18 @@
 import "core-js/stable";
 import "regenerator-runtime";
 
-import * as model from "./model.js";
-import templates from "./templates.js";
+import * as model from "./model";
+import templates from "./templates";
 // Views
-import menuView from "./views/menuView.js";
-import searchView from "./views/searchView.js";
+import menuView from "./views/menuView";
+import searchView from "./views/searchView";
 // --- Build Functions
-import buildArticleView from "./views/articleView.js";
-import buildTargetView from "./views/targetView.js";
-import buildCalendarView from "./views/calendarView.js";
-import buildQuoteView from "./views/quoteView.js";
-import buildModelBookmarkView from "./views/modelBookmarkView.js";
-import buildQuoteBookmarkView from "./views/quoteBookmarkView.js";
+import buildArticleView from "./views/articleView";
+import buildTargetView from "./views/targetView";
+import buildCalendarView from "./views/calendarView";
+import buildQuoteView from "./views/quoteView";
+import buildModelBookmarkView from "./views/modelBookmarkView";
+import buildQuoteBookmarkView from "./views/quoteBookmarkView";
 
 const contentMain = document.querySelector(".main__content");
 // Build app views

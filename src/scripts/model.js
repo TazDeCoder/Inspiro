@@ -1,10 +1,10 @@
 "use strict";
 
 import _ from "lodash";
-import Quotesy from "quotesy/lib/index.js";
+import Quotesy from "quotesy/lib/index";
 
-import { getJSON } from "./utils.js";
-import { API_URL } from "./config.js";
+import { getJSON } from "./utils";
+import { API_URL } from "./config";
 
 const nameMonths = new Map([
   [0, "JAN"],
