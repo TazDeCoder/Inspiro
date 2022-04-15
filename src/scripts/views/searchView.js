@@ -38,12 +38,6 @@ function searchView() {
     listEl.innerHTML = listMarkup;
     listItems = listEl.querySelectorAll("li");
     listEl.classList.remove("hide");
-    listEl.addEventListener("click", (e) => {
-      const clicked = e.target.closest("li");
-      if (!clicked) return;
-      inputEl.value = clicked.textContent;
-      listItems.forEach((item) => (item.style.display = "none"));
-    });
   };
   // Add handler functions
   const addHandlerInput = (handler) => {
@@ -68,6 +62,13 @@ function searchView() {
       if (query === "") return inputEl.focus();
       inputEl.value = "";
       handler(query);
+    });
+    listEl.addEventListener("click", (e) => {
+      const clicked = e.target.closest("li");
+      if (!clicked) return;
+      inputEl.value = "";
+      listItems.forEach((item) => (item.style.display = "none"));
+      handler(clicked.textContent);
     });
   };
   // Public API
