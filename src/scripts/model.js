@@ -24,6 +24,7 @@ const nameMonths = new Map([
 const currDate = new Date();
 
 export const state = {
+  error: null,
   search: {
     query: "",
     imageSrc: "",
@@ -68,6 +69,7 @@ export function loadSearchList(currentSearch) {
 }
 
 export async function getSearchResult(query) {
+  state.error = null;
   state.search.query = query;
   const searchParams = new URLSearchParams({
     origin: "*",
@@ -83,7 +85,10 @@ export async function getSearchResult(query) {
   const data = await getJSON(url);
   const { pages } = data.query;
   const [page] = Object.values(pages);
-  if (page?.missing === "") return (state.search.query = "");
+  if (page?.missing === "") {
+    state.error = true;
+    return;
+  }
   state.search.title = page.title;
   state.search.imageSrc = page.original?.source ?? "";
   // Parse data
@@ -94,6 +99,7 @@ export async function getSearchResult(query) {
     (el) => el.nodeName === "H2"
   );
   state.search.pageText = [...bodyDOM.children].map((el) => el.outerHTML);
+  state.error = false;
 }
 
 ////////////////////////////////////////////////

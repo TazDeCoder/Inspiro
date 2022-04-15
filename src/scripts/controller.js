@@ -84,7 +84,7 @@ function controlMenu(event) {
 async function controlArticle() {
   contentMain.insertAdjacentHTML("beforeend", templates.spinner());
   await model.getSearchResult(model.state.search.query);
-  if (!model.state.search.query) {
+  if (model.state.error) {
     articleView.renderError();
   } else {
     articleView.render(model.state.search);
