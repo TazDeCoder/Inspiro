@@ -8,20 +8,22 @@
 
 ## Description
 
-Get Your Priorities Straight, and Start Living Intentionally
+A JavaScript application to get you inspired to become the best verison of yourself
 
 **Features:**
 
-- Modern GUI
+- Modern User Interface
 - Intuitive Design
 - Calendar Tracker
 - Set Weekly Goals
 - Discover Great People
 - Daily Inspiring Quotes
 
-**TASK-LIST:**
+## What I've Learnt
 
-**_None at the moment, but feel free to suggest any :)_**
++ Building a single-page-application (SPA)
++ Managing complex state
++ & much more
 
 ## Installation
 
