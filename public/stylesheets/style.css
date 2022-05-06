@@ -5,17 +5,13 @@
   -moz-box-sizing: border-box;
   box-sizing: border-box;
 }
-html,
-body {
-  width: 100%;
-  height: 100%;
-}
 html {
+  font-family: "Raleway", sans-serif;
   font-size: 16px;
 }
 body {
+  min-height: 100vh;
   background-color: #fff;
-  font-family: "Raleway", sans-serif;
 }
 nav,
 button,
@@ -53,26 +49,26 @@ h3 {
   font-size: 1.2rem;
   font-weight: 900;
 }
-/* Custom CSS properties */
+/* CSS variables */
 :root {
-  /* Primary Colors */
+  /* Primary colors */
   --color-primary: #7e7d7d;
   --color-primary-darker: #4b4b4b;
   --color-primary-lighter: #aeadad;
-  /* Secondary Colors */
+  /* Secondary colors */
   --color-secondary: #464646;
   --color-secondary-darker: #2d2d2d;
   --color-secondary-lighter: #a2a3a1;
-  /* Tertiary Colors */
+  /* Tertiary colors */
   --color-tertiary: #646464;
   --color-tertiary-darker: #3c3c3c;
   --color-tertiary-lighter: #8a8b8a;
-  /* Font */
+  /* Font colors */
   --font-primary: #fff;
   --font-primary-hover: #ccc;
   --font-secondary: #000;
   --font-tertiary: grey;
-  /* Input */
+  /* Input colors */
   --input-primary: #fff;
   --input-primary-hover: #ccc;
   --input-secondary: #3c3c3c;
@@ -87,7 +83,7 @@ h3 {
 ================================
 */
 
-/* General Elements */
+/* General elements */
 .btn {
   cursor: pointer;
 }
@@ -95,7 +91,7 @@ h3 {
   font-weight: 700;
 }
 
-/* Class Modifiers */
+/* Class modifiers */
 
 .hidden {
   visibility: hidden;
@@ -110,7 +106,7 @@ h3 {
 
 /* 
  *
- * Head Top
+ * Head
  *
  *
  */
@@ -309,7 +305,7 @@ h3 {
 
 .main {
   width: 100%;
-  min-height: 100%;
+  min-height: 100vh;
   background-color: var(--color-primary-darker);
 }
 .main__content {
@@ -330,6 +326,32 @@ h3 {
     flex-direction: row;
     flex-wrap: wrap;
   }
+}
+
+/* 
+ *
+ * Foot
+ *
+ *
+ */
+
+.foot {
+  width: 100%;
+  background-color: var(--color-tertiary-darker);
+}
+.foot .foot__nav--socials {
+  display: flex;
+  justify-content: center;
+}
+.foot .foot__nav--socials__item {
+  display: inline-block;
+  margin: 0 0.5rem;
+  padding: 10px 0;
+}
+.foot .foot__nav--socials__item > a {
+  text-decoration: none;
+  color: var(--font-primary);
+  font-size: 3rem;
 }
 
 /*

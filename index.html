@@ -4,13 +4,47 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" type="text/css" href="./src/stylesheets/reset.css" />
-    <link rel="stylesheet" type="text/css" href="./src/stylesheets/style.css" />
-    <link rel="stylesheet" type="text/css" href="./src/stylesheets/icons.css" />
     <link
       rel="stylesheet"
       type="text/css"
-      href="./src/stylesheets/animations.css"
+      href="./public/stylesheets/reset.css"
+    />
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="./public/stylesheets/style.css"
+    />
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="./public/stylesheets/icons.css"
+    />
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="./public/stylesheets/animations.css"
+    />
+    <link
+      rel="apple-touch-icon"
+      sizes="180x180"
+      href="./public/favicon/apple-touch-icon.png"
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="32x32"
+      href="./public/favicon/favicon-32x32.png"
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="16x16"
+      href="./public/favicon/favicon-16x16.png"
+    />
+    <link rel="manifest" href="./public/favicon/site.webmanifest" />
+    <link
+      href="./node_modules/@fortawesome/fontawesome-free/css/brands.css"
+      rel="stylesheet"
     />
     <link
       href="https://fonts.googleapis.com/css2?family=Raleway:ital,wght@0,400;0,500;0,600;0,700;1,500&display=swap"
@@ -20,14 +54,14 @@
       href="https://fonts.googleapis.com/css2?family=Merriweather:ital,wght@0,300;0,400;0,700;0,900;1,300;1,400&display=swap"
       rel="stylesheet"
     />
-    <script defer type="module" src="./src/scripts/controller.js"></script>
+    <script defer type="module" src="./src/controller.js"></script>
     <title>Inspiro</title>
   </head>
   <body>
     <!-- Fixed at top -->
     <header class="head--top">
       <div class="head__content">
-        <!-- Search query form  -->
+        <!-- Search bar -->
         <div class="content__wrapper--search">
           <form class="wrapper__form-search">
             <input
@@ -45,16 +79,17 @@
           <div class="content__nav-item">
             <i class="item__icon--menu gg-menu"></i>
           </div>
-          <!-- Links to different views -->
+          <!-- Links to different tabs -->
           <ul class="content__nav-tabs hidden">
+            <!-- Home tab -->
             <li class="tabs__item">
               <a class="item-link item-link--home" href="/dashboard">Home</a>
             </li>
-            <!-- Quotes -->
+            <!-- Bookmark quotes tab -->
             <li class="tabs__item">
               <a class="item-link item-link--quotes" href="/quotes">Quotes</a>
             </li>
-            <!-- Role models -->
+            <!-- Bookmark role-models tab -->
             <li class="tabs__item">
               <a class="item-link item-link--models" href="/models">Models</a>
             </li>
@@ -62,10 +97,30 @@
         </nav>
       </div>
     </header>
-    <!-- Covers whole page -->
+
     <main class="main">
       <!-- Page that displays the different views -->
       <div class="main__content"></div>
     </main>
+
+    <footer class="foot">
+      <!-- Links to socials -->
+      <nav class="foot__nav foot__nav--socials nav">
+        <div class="foot__nav--socials__item">
+          <a
+            href="https://github.com/tarwat-uddin/Inspiro"
+            target="_blank"
+            rel="noopener"
+          >
+            <i class="fa-brands fa-github" />
+          </a>
+        </div>
+        <div class="foot__nav--socials__item">
+          <a href="https://dev.to/tarwatuddin" target="_blank" rel="noopener">
+            <i class="fa-brands fa-dev" />
+          </a>
+        </div>
+      </nav>
+    </footer>
   </body>
 </html>
