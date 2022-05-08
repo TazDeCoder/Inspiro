@@ -2,9 +2,8 @@
 
 ## Screenshots
 
-![screenshots-0](/screenshots/screenshots-0.png)
-![screenshots-1](/screenshots/screenshots-1.png)
-![screenshots-2](/screenshots/screenshots-2.png)
+<img src="./public/images/screenshots/screenshots-1.png" alt="desktop-screenshot" width="65%"></img>
+<img src="./public/images/screenshots/screenshots-2.png" alt="mobile-screenshot" width="30%"></img>
 
 ## Description
 
@@ -21,9 +20,9 @@ A JavaScript application to get you inspired to become the best verison of yours
 
 ## What I've Learnt
 
-+ Building a single-page-application (SPA)
-+ Managing complex state
-+ & much more
+- Building a single-page-application (SPA)
+- Managing complex state
+- & much more
 
 ## Installation
 
