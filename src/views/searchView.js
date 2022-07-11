@@ -4,6 +4,7 @@ import Handlebars from "handlebars/dist/handlebars";
 import _ from "lodash";
 
 import templates from "../templates";
+import { MEDIUM_DEVICE_WIDTH_PX } from "../config";
 
 function generateListMarkup({ suggestions }) {
   const listData = {
@@ -24,7 +25,9 @@ function searchView() {
   const headHeight = headEl.getBoundingClientRect().height;
   // Add event listeners
   window.addEventListener("scroll", function () {
-    const currentScrollPos = window.pageYOffset;
+    const windowInnerWidth = document.documentElement.clientWidth;
+    if (windowInnerWidth >= MEDIUM_DEVICE_WIDTH_PX) return;
+    const currentScrollPos = window.scrollY;
     if (currentScrollPos > headHeight + 100) {
       headEl.classList.add("head--hide");
     } else {
